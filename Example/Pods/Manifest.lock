@@ -1,0 +1,16 @@
+PODS:
+  - Kline (0.1.0)
+
+DEPENDENCIES:
+  - Kline (from `../`)
+
+EXTERNAL SOURCES:
+  Kline:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Kline: 6abbab9a8d42001524181663a9aa995200843cca
+
+PODFILE CHECKSUM: 6724825514d4fce4ba91340fe1b2a7149d9fcd8e
+
+COCOAPODS: 1.9.3

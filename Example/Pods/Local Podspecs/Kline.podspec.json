@@ -1,0 +1,22 @@
+{
+  "name": "Kline",
+  "version": "0.1.0",
+  "summary": "A short description of Kline.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/zhangj/Kline",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "zhangj": "seasonsv@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/zhangj/Kline.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "Kline/Classes/**/*"
+}
