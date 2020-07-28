@@ -34,6 +34,8 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'Kline/Classes/**/*'
   
+  s.xcconfig  =  { 'VALID_ARCHS' => 'arm64' }
+  
 #  s.resources = 'Kline/Assets/*'
   
    s.resource_bundles = {
