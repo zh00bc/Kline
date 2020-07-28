@@ -32,9 +32,11 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'Kline/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'Kline' => ['Kline/Assets/*.png']
-  # }
+#  s.resources = 'Kline/Assets/*'
+  
+   s.resource_bundles = {
+     'Kline' => ['Kline/Assets/*']
+   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
    s.frameworks = 'UIKit'

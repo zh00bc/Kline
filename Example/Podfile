@@ -1,11 +1,14 @@
+platform :ios, "12.0"
 use_frameworks!
 
 target 'Kline_Example' do
   pod 'Kline', :path => '../'
-
-  target 'Kline_Tests' do
-    inherit! :search_paths
-
-    
-  end
+  
+  pod 'SnapKit'
+  pod 'Starscream'
+  pod 'ObjectMapper'
+  pod 'Reveal-SDK'
+  pod 'GzipSwift'
+  pod 'RxSwift'
+  pod 'RxCocoa'
 end

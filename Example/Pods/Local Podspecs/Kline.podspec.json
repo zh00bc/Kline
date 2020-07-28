@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "summary": "A short description of Kline.",
   "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/zhangj/Kline",
+  "homepage": "https://github.com/zh00bc/Kline",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,11 +12,22 @@
     "zhangj": "seasonsv@gmail.com"
   },
   "source": {
-    "git": "https://github.com/zhangj/Kline.git",
+    "git": "https://github.com/zh00bc/Kline.git",
     "tag": "0.1.0"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "12.0"
   },
-  "source_files": "Kline/Classes/**/*"
+  "source_files": "Kline/Classes/**/*",
+  "resource_bundles": {
+    "Kline": [
+      "Kline/Assets/*"
+    ]
+  },
+  "frameworks": "UIKit",
+  "dependencies": {
+    "SnapKit": [
+
+    ]
+  }
 }

@@ -1,16 +1,54 @@
 PODS:
-  - Kline (0.1.0)
+  - GzipSwift (5.1.1)
+  - Kline (0.1.0):
+    - SnapKit
+  - ObjectMapper (4.2.0)
+  - Reveal-SDK (26)
+  - RxCocoa (5.1.1):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.1.1):
+    - RxSwift (~> 5)
+  - RxSwift (5.1.1)
+  - SnapKit (5.0.1)
+  - Starscream (4.0.3)
 
 DEPENDENCIES:
+  - GzipSwift
   - Kline (from `../`)
+  - ObjectMapper
+  - Reveal-SDK
+  - RxCocoa
+  - RxSwift
+  - SnapKit
+  - Starscream
+
+SPEC REPOS:
+  trunk:
+    - GzipSwift
+    - ObjectMapper
+    - Reveal-SDK
+    - RxCocoa
+    - RxRelay
+    - RxSwift
+    - SnapKit
+    - Starscream
 
 EXTERNAL SOURCES:
   Kline:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Kline: 6abbab9a8d42001524181663a9aa995200843cca
+  GzipSwift: 893f3e48e597a1a4f62fafcb6514220fcf8287fa
+  Kline: 7f97cb4af49a37828fe85b6c52ca0da7a912b8c9
+  ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
+  Reveal-SDK: 5f94f14aff3d5f2a49f246edcd266fa4472679e9
+  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  Starscream: ef06f0961fff0880bca0604416d61141e4faca67
 
-PODFILE CHECKSUM: 6724825514d4fce4ba91340fe1b2a7149d9fcd8e
+PODFILE CHECKSUM: 0e161e9322e4ff1bebda4cfb1da97dec2ee47d39
 
 COCOAPODS: 1.9.3
