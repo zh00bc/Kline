@@ -25,7 +25,7 @@ open class KlineViewDataSource {
     public var lineWidth: CGFloat = 7.0
     
     public var mainChartType: ChartType = .main_ma
-    public var assistantChartType: ChartType = .assistant_kdj
+    public var assistantChartType: ChartType = .assistant_rsi
     public var volumeChartType: ChartType = .volume
     
     public init() { }

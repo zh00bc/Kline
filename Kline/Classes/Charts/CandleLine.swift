@@ -103,7 +103,7 @@ class CandleLine: KLine {
                     lowCandle = candle
                 }
                 
-                if candle.openPoint.y < candle.closePoint.y {
+                if candle.closePoint.y <= candle.openPoint.y {
                     upLinePath.move(to: candle.lowPoint)
                     upLinePath.addLine(to: candle.highPoint)
                     upRectPath.move(to: candle.openPoint)

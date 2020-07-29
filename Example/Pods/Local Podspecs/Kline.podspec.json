@@ -18,7 +18,11 @@
   "platforms": {
     "ios": "12.0"
   },
+  "swift_versions": "5.0",
   "source_files": "Kline/Classes/**/*",
+  "xcconfig": {
+    "VALID_ARCHS": "arm64"
+  },
   "resource_bundles": {
     "Kline": [
       "Kline/Assets/*"
@@ -29,5 +33,6 @@
     "SnapKit": [
 
     ]
-  }
+  },
+  "swift_version": "5.0"
 }

@@ -26,6 +26,7 @@ open class SlitherView: UIView {
     private var longPressShowView: LongPressShowView!
     private var latestPriceView: KLineLatestPriceView!
     private var gotoLatestButton: UIButton!
+    private var logoImageView: UIImageView!
     
     /// Full Screen
     var isFullView: Bool = false
@@ -40,7 +41,7 @@ open class SlitherView: UIView {
     }
     
     private var assistantViewChartType: ChartType {
-        return dataSource?.assistantChartType ?? .assistant_hide
+        return dataSource?.assistantChartType ?? .assistant_wr
     }
     
     // MARK: - Data
@@ -389,6 +390,9 @@ extension SlitherView {
         addSubview(volumeNumberView)
         addSubview(assistantNumberView)
         
+        logoImageView = UIImageView(image: UIImage(named: "k_line_logo"))
+        addSubview(logoImageView)
+        
         scrollView = UIScrollView(frame: bounds)
         scrollView.backgroundColor = .clear
         scrollView.showsHorizontalScrollIndicator = false
@@ -429,6 +433,10 @@ extension SlitherView {
         longPressShowView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        logoImageView.snp.makeConstraints {
+            $0.left.equalTo(mainNumberView).offset(10)
+            $0.bottom.equalTo(mainNumberView).offset(-10)
+        }
     }
     
     func setupGesture() {
@@ -443,7 +451,7 @@ extension SlitherView {
         addGestureRecognizer(longPressGesture)
     }
         
-    func updateAllViews() {
+    public func updateAllViews() {
         resetMaxLineWidth()
         
         lineInterval = maxLineWidth + 2.0
@@ -507,7 +515,7 @@ extension SlitherView {
                     volumeNumberView.messages = tips
                 }
                 
-                if assistantChart.isHidden {
+                if !assistantChart.isHidden {
                     let tips = dataSource.getNewCurrentViewByType(dataSource.assistantChartType)
                     assistantNumberView.messages = tips
                 }

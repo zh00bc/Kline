@@ -53,13 +53,13 @@ public class KlineIndexModel {
         if chartType == .assistant_macd {
             let tip = KLineTipModel()
             tip.color = ColorManager.shared.kColorSecondaryText
-            tip.lineTip = "MACD(\(macd_s_paramter), \(macd_l_paramter), \(macd_m_paramter)"
+            tip.lineTip = "MACD(\(macd_s_paramter), \(macd_l_paramter), \(macd_m_paramter))"
             tips.append(tip)
         }
         if chartType == .assistant_kdj {
             let tip = KLineTipModel()
             tip.color = ColorManager.shared.kColorSecondaryText
-            tip.lineTip = "KDJ(\(kdj_n), \(kdj_m1), \(kdj_m2)"
+            tip.lineTip = "KDJ(\(kdj_n), \(kdj_m1), \(kdj_m2))"
             tips.append(tip)
         }
         return tips

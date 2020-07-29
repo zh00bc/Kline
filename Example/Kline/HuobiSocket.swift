@@ -84,6 +84,7 @@ extension HuobiSocket: WebSocketDelegate {
     public func didReceive(event: WebSocketEvent, client: WebSocket) {
         switch event {
         case .connected:
+            debugPrint(event)
             delegate?.huobiSocketDidConnected(self)
         case let .binary(data):
             var receivedData = data

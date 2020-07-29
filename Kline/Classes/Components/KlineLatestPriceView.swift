@@ -154,7 +154,7 @@ extension KLineLatestPriceView {
         var lineImage: UIImage?
         UIGraphicsBeginImageContext(CGSize(width: UIScreen.main.bounds.width, height: 1))
         let context = UIGraphicsGetCurrentContext()
-        context?.setLineDash(phase: 0, lengths: [5.0, 5.0])
+        context?.setLineDash(phase: 0, lengths: [3.0, 3.0])
         context?.setStrokeColor(color.cgColor)
         context?.move(to: CGPoint(x: 0.0, y: 0.0))
         context?.addLine(to: CGPoint(x: UIScreen.main.bounds.width, y: 0))

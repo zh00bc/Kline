@@ -35,8 +35,28 @@ struct HBKlineIndexCalculateCommon {
     }
     
     static func updateMA(index: KlineIndexModel, datas: [KLineDataModel]) {
-        for (i, num) in index.priceMaArray.filter({ $0 > 0 }).enumerated() {
+        for (i, num) in index.priceMaNoZeroArray.enumerated() {
             for (j, data) in datas.enumerated() {
+                if j < num - 1 { continue }
+                
+                switch i {
+                case 0:
+                    if j < datas.count - 1 && !data.priceMa1.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                        continue
+                    }
+                case 1:
+                    if j < datas.count - 1 && !data.priceMa2.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                        continue
+                    }
+                case 2:
+                    if j < datas.count - 1 && !data.priceMa3.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                        continue
+                    }
+                default:
+                    break
+                }
+                
+                
                 var closePrice: NSDecimalNumber = 0
                 let endIndex = (j + 1 - num) >= 0 ? (j + 1 - num) : 0
                 for k in stride(from: j, through: endIndex, by: -1) {
@@ -66,6 +86,16 @@ struct HBKlineIndexCalculateCommon {
     static func updateAmount(index: KlineIndexModel, datas: [KLineDataModel]) {
         for (i, num) in index.volumeMaArray.filter({ $0 > 0 }).enumerated() {
             for (j, data) in datas.enumerated() {
+                if i == 0 {
+                    if j < datas.count - 1 && !data.amountMa1.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                        continue
+                    }
+                } else {
+                    if j < datas.count - 1 && !data.amountMa2.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                        continue
+                    }
+                }
+                
                 var vol: NSDecimalNumber = 0
                 let endIndex = (j + 1 - num) >= 0 ? (j + 1 - num) : 0
                 for k in stride(from: j, through: endIndex, by: -1) {
@@ -189,12 +219,12 @@ struct HBKlineIndexCalculateCommon {
                 if index < num - 1 { continue }
                 let startIndex = index - num + 1
                 var highPrice = Double.leastNormalMagnitude, lowPrice = Double.greatestFiniteMagnitude
-                
+
                 for mIndex in startIndex...index {
                     highPrice = max(highPrice, datas[mIndex].high.doubleValue)
                     lowPrice = min(lowPrice, datas[mIndex].low.doubleValue)
                 }
-                
+
                 let wr = 100 * (highPrice - data.close.doubleValue) / (highPrice - lowPrice)
                 if i == 0 {
                     data.wr1 = NSNumber(value: wr)

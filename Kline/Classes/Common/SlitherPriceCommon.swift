@@ -28,7 +28,7 @@ struct SlitherPriceCommon {
         columnar.lowPoint = CGPoint(x: x, y: getY(from: chartView, dValue: dValue, current: data.lowPrice.doubleValue, isMainView: isMainView))
         columnar.highPoint = CGPoint(x: x, y: getY(from: chartView, dValue: dValue, current: data.highPrice.doubleValue, isMainView: isMainView))
         columnar.isNullData = data.isNullData
-//        columnar.rgbColor = data.pointRgb
+        columnar.priceUp = data.priceUp
         return columnar
     }
     

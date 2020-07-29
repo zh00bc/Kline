@@ -44,7 +44,7 @@ struct KlineDataConversionCommon {
         let d = data.getValue(for: type, index: 0)
         columnar.rgb = ColorManager.shared.klinePrimaryTextColor
         
-        if type == 14 {
+        if type == 14 { /// volume
             if period == .timeline {
                 columnar.priceUp = false
             } else {

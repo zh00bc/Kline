@@ -36,7 +36,9 @@ class SlitherNumberView: UIView {
         }
     }
     
+    /// 数线条数
     let xLineNumber: Int
+    /// 横线条数
     let yLineNumber: Int
     
     let lineHeight: CGFloat = 0.5
@@ -50,7 +52,7 @@ class SlitherNumberView: UIView {
     }
     
     deinit {
-        print("SlitherNumberView deinit")
+        debugPrint("SlitherNumberView deinit")
     }
     
     init(type: NumberViewType) {
@@ -92,7 +94,43 @@ class SlitherNumberView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        addNumbers()
+        addLine()
+        setupGradient()
+        messageView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: Constants.messageViewHeight)
+        bringSubviewToFront(messageView)
+    }
+    
+    /// max(a3) min(a4) chartType(a5) pricePrecision(a6) amountPrecision(a7)
+    func changeNumber(max: NSNumber, min: NSNumber, chartType: ChartType, pricePrecision: Int, amountPrecision: Int) {
+        switch type {
+        case .volume:
+            if max.doubleValue > 0 {
+                numbers[0].text = KLineNumberFormatter.format(volume: max, amountPrecision: amountPrecision)
+            } else {
+                numbers[0].text = ""
+            }
+            if min.doubleValue > 0 {
+                numbers[1].text = KLineNumberFormatter.format(volume: min, amountPrecision: amountPrecision)
+            } else {
+                numbers[1].text = ""
+            }
+        case .main:
+            let step = ( max.doubleValue - min.doubleValue ) / Double( yLineNumber - 1 )
+            numbers[0].text = KLineNumberFormatter.format(max, precision: pricePrecision)
+            numbers[1].text = KLineNumberFormatter.format(max.doubleValue - step, precision: pricePrecision)
+            numbers[2].text = KLineNumberFormatter.format(max.doubleValue - 2 * step, precision: pricePrecision)
+            numbers[3].text = KLineNumberFormatter.format(max.doubleValue - 3 * step, precision: pricePrecision)
+            numbers[4].text = KLineNumberFormatter.format(min, precision: pricePrecision)
+        case .assistant:
+            let step = ( max.doubleValue - min.doubleValue ) / 2.0
+            numbers[0].text = String(format: "%.2f", max)
+            numbers[1].text = String(format: "%.2f", min.doubleValue + step)
+            numbers[2].text = String(format: "%.2f", min)
+        }
+    }
+    
+    func addNumbers() {
         switch type {
         case .main:
             numbers[0].snp.remakeConstraints {
@@ -137,40 +175,8 @@ class SlitherNumberView: UIView {
                 $0.right.equalTo(numbers[0])
                 $0.bottom.equalTo(self)
             }
-        }
-        
-        addLine()
-        setupGradient()
-        messageView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: Constants.messageViewHeight)
-        bringSubviewToFront(messageView)
-    }
-    
-    /// max(a3) min(a4) chartType(a5) pricePrecision(a6) amountPrecision(a7)
-    func changeNumber(max: NSNumber, min: NSNumber, chartType: ChartType, pricePrecision: Int, amountPrecision: Int) {
-        switch type {
-        case .volume:
-            if max.doubleValue > 0 {
-                numbers[0].text = KLineNumberFormatter.format(volume: max, amountPrecision: amountPrecision)
-            } else {
-                numbers[0].text = ""
-            }
-            if min.doubleValue > 0 {
-                numbers[1].text = KLineNumberFormatter.format(volume: min, amountPrecision: amountPrecision)
-            } else {
-                numbers[1].text = ""
-            }
-        case .main:
-            let step = ( max.doubleValue - min.doubleValue ) / Double( yLineNumber - 1 )
-            numbers[0].text = KLineNumberFormatter.format(max, precision: pricePrecision)
-            numbers[1].text = KLineNumberFormatter.format(max.doubleValue - step, precision: pricePrecision)
-            numbers[2].text = KLineNumberFormatter.format(max.doubleValue - 2 * step, precision: pricePrecision)
-            numbers[3].text = KLineNumberFormatter.format(max.doubleValue - 3 * step, precision: pricePrecision)
-            numbers[4].text = KLineNumberFormatter.format(min, precision: pricePrecision)
-        case .assistant:
-            let step = ( max.doubleValue - min.doubleValue ) / 2.0
-            numbers[0].text = String(format: "%.2f", max)
-            numbers[1].text = String(format: "%.2f", min.doubleValue + step)
-            numbers[2].text = String(format: "%.2f", min)
+            
+            
         }
     }
     
@@ -178,6 +184,7 @@ class SlitherNumberView: UIView {
         
         subviews.filter({ $0.tag == 42 }).forEach({ $0.removeFromSuperview() })
         
+        /// 竖线
         var index = 1
         while index <= xLineNumber {
             let verLine = UIView()
@@ -193,12 +200,13 @@ class SlitherNumberView: UIView {
             index += 1
         }
         
+        /// 横线
         switch type {
         case .main:
-            addLine(frame: CGRect(x: 0.0, y: numbers[0].frame.minY, width: bounds.width, height: lineHeight))
-            addLine(frame: CGRect(x: 0.0, y: numbers[1].frame.maxY, width: bounds.width, height: lineHeight))
-            addLine(frame: CGRect(x: 0.0, y: numbers[2].frame.maxY, width: bounds.width, height: lineHeight))
-            addLine(frame: CGRect(x: 0.0, y: numbers[3].frame.maxY, width: bounds.width, height: lineHeight))
+            addLine(frame: CGRect(x: 0.0, y: Constants.mainChartTopOffset, width: bounds.width, height: lineHeight))
+            addLine(frame: CGRect(x: 0.0, y: Constants.mainChartTopOffset + ySpacing, width: bounds.width, height: lineHeight))
+            addLine(frame: CGRect(x: 0.0, y: Constants.mainChartTopOffset + 2 * ySpacing, width: bounds.width, height: lineHeight))
+            addLine(frame: CGRect(x: 0.0, y: Constants.mainChartTopOffset + 3 * ySpacing, width: bounds.width, height: lineHeight))
             addLine(frame: CGRect(x: 0.0, y: bounds.height, width: bounds.width, height: lineHeight))
         case .volume:
             addLine(frame: CGRect(x: 0.0, y: 0.0, width: bounds.width, height: lineHeight))

@@ -30,9 +30,9 @@ public class KLineDataModel {
     public var changeRate: NSDecimalNumber = 0.0
     public var time: Int = 0
     
-    var rsi1: NSNumber = 0.0
-    var rsi2: NSNumber = 0.0
-    var rsi3: NSNumber = 0.0
+    var rsi1: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    var rsi2: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    var rsi3: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
     
     var wr1: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
     var wr2: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
@@ -44,32 +44,32 @@ public class KLineDataModel {
     var amountMa1: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
     var amountMa2: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
     
-    var priceMa1: NSNumber = 0.0
-    var priceMa2: NSNumber = 0.0
-    var priceMa3: NSNumber = 0.0
-    var priceMa4: NSNumber = 0.0
-    var priceMa5: NSNumber = 0.0
-    var priceMa6: NSNumber = 0.0
+    var priceMa1: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    var priceMa2: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    var priceMa3: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    var priceMa4: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    var priceMa5: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    var priceMa6: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
     
-    var bollLb: NSNumber = 0.0
-    var bollUb: NSNumber = 0.0
-    var bollSummary: NSNumber = 0.0
+    var bollLb: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    var bollUb: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    var bollSummary: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
     
-    var kdjJ: NSNumber = 0.0
-    var kdjD: NSNumber = 0.0
-    var kdjK: NSNumber = 0.0
+    var kdjJ: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    var kdjD: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    var kdjK: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
     
-    var macdDea: NSNumber = 0.0
-    var macdDif: NSNumber = 0.0
-    var macdMacd: NSNumber = 0.0
+    var macdDea: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    var macdDif: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    var macdMacd: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
     
     var priceUp: Bool {
         return open.doubleValue <= close.doubleValue
     }
     
     /// ["KDJ_K": 33, "WR_14": 23]
-    var indicators: [String: NSNumber] = [:]
-        
+    var ext: [String: NSNumber] = [:]
+    
     public init() { }
     
 
