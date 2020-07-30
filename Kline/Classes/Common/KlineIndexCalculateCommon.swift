@@ -38,7 +38,6 @@ struct HBKlineIndexCalculateCommon {
         for (i, num) in index.priceMaNoZeroArray.enumerated() {
             for (j, data) in datas.enumerated() {
                 if j < num - 1 { continue }
-                
                 switch i {
                 case 0:
                     if j < datas.count - 1 && !data.priceMa1.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
@@ -52,10 +51,21 @@ struct HBKlineIndexCalculateCommon {
                     if j < datas.count - 1 && !data.priceMa3.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
                         continue
                     }
+                case 3:
+                    if j < datas.count - 1 && !data.priceMa4.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                        continue
+                    }
+                case 4:
+                    if j < datas.count - 1 && !data.priceMa5.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                        continue
+                    }
+                case 5:
+                    if j < datas.count - 1 && !data.priceMa6.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                        continue
+                    }
                 default:
                     break
                 }
-                
                 
                 var closePrice: NSDecimalNumber = 0
                 let endIndex = (j + 1 - num) >= 0 ? (j + 1 - num) : 0
@@ -86,6 +96,9 @@ struct HBKlineIndexCalculateCommon {
     static func updateAmount(index: KlineIndexModel, datas: [KLineDataModel]) {
         for (i, num) in index.volumeMaArray.filter({ $0 > 0 }).enumerated() {
             for (j, data) in datas.enumerated() {
+                if j < num - 1 {
+                    continue
+                }
                 if i == 0 {
                     if j < datas.count - 1 && !data.amountMa1.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
                         continue
@@ -112,12 +125,76 @@ struct HBKlineIndexCalculateCommon {
     }
     
     static func updateBOLL(index: KlineIndexModel, datas: [KLineDataModel]) {
+        for (i, data) in datas.enumerated() {
+            if i < index.boll_n_parameter - 1 {
+                continue
+            }
+            if i < datas.count - 1 && !data.bollSummary.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                continue
+            }
+            data.bollSummary = calculateAveragePrice(count: index.boll_n_parameter, endIndex: i, datas: datas)
+            data.bollUb = NSNumber(value: data.bollSummary.doubleValue + calculateStd(num: index.boll_n_parameter, arg: index.boll_p_parameter, index: i, datas: datas).doubleValue * Double(index.boll_p_parameter))
+            data.bollLb = NSNumber(value: data.bollSummary.doubleValue - calculateStd(num: index.boll_n_parameter, arg: index.boll_p_parameter, index: i, datas: datas).doubleValue * Double(index.boll_p_parameter))
+        }
+    }
+    
+    private static func calculateStd(num: Int, arg: Int, index: Int, datas: [KLineDataModel]) -> NSNumber {
+        var result: Double = 0.0
+        if index < (num - 1) {
+            return NSNumber(value: result)
+        }
+        var sum: Double = 0.0
+        var boll_ma: Double = 0.0
         
+        var i = index
+        while i > (index - num) {
+            let data = datas[i]
+            if boll_ma == 0.0 {
+                boll_ma = data.bollSummary.doubleValue
+            }
+            sum += pow(data.close.doubleValue - boll_ma, Double(arg))
+            i -= 1
+        }
+        result = sqrt(sum / Double(num))
+        return NSNumber(value: result)
+    }
+    
+    static func calculateAveragePrice(count: Int, endIndex: Int, datas: [KLineDataModel]) -> NSNumber {
+        var result: Double = 0.0
+        if endIndex < count - 1 {
+            return NSNumber(value: result)
+        }
+        
+        var sum: Double = 0.0
+        var i = endIndex
+        while i > endIndex - count {
+            sum += datas[i].close.doubleValue
+            i -= 1
+        }
+        result = sum / Double(count)
+        return NSNumber(value: result)
     }
     
     static func updateMACD(index: KlineIndexModel, datas: [KLineDataModel]) {
         for (i, data) in datas.enumerated() {
-            
+            if i < index.macd_l_paramter - 1 {
+                continue
+            }
+            if i < index.macd_l_paramter + index.macd_m_paramter - 2 {
+                if i < datas.count - 1 && !data.macdDif.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                    continue
+                }
+                self.calculateExpma(index: i, emaSmall: index.macd_s_paramter, emaBig: index.macd_l_paramter, datas: datas)
+                data.macdDif = NSNumber(value: data.ema_small.doubleValue - data.ema_big.doubleValue)
+            } else {
+                if i < datas.count - 1 && !data.macdMacd.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                    continue
+                }
+                self.calculateExpma(index: i, emaSmall: index.macd_s_paramter, emaBig: index.macd_l_paramter, datas: datas)
+                data.macdDif = NSNumber(value: data.ema_small.doubleValue - data.ema_big.doubleValue)
+                self.calculateDea(index: index, argu: index.macd_m_paramter, end: i, datas: datas)
+                data.macdMacd = NSNumber(value: (data.macdDif.doubleValue - data.macdDea.doubleValue))
+            }
         }
     }
     
@@ -129,38 +206,39 @@ struct HBKlineIndexCalculateCommon {
      @param emaBig 默认26
      @param datas 需要处理的数据
      */
-//    private static func calculateExpma(index: Int, emaSmall: Int, emaBig: Int, datas: [KLineDataModel]) {
-//        let currentModel = datas[index]
-//        if index == 0 {
-//            // 第一日的ema12为收盘价
-//            currentModel.ema_small = currentModel.closePrice
-//            currentModel.ema_big   = currentModel.closePrice
-//        }else{//测试
-//            let lastModel = datas[index - 1]
-//            currentModel.ema_small = (2.0 / CGFloat(emaSmall + 1)) * (currentModel.closePrice - lastModel.ema_small) + lastModel.ema_small
-//            currentModel.ema_big = (2.0 / CGFloat(emaBig + 1)) * (currentModel.closePrice - lastModel.ema_big) + lastModel.ema_big
-//        }
-//    }
-//
-//    /**
-//     DIF的EMA(DEA)
-//
-//     @param argu 计算平均值的平滑参数
-//     @param endIndex 结束时的index
-//     @param datas 需要处理的数据
-//     */
-//    private static func calculateDea(argu: Int, end endIndex: Int, datas: [KLineDataModel]) {
-//        let endModel = datas[endIndex]
-//        if endIndex == 0 {
-//            // 第一日的dea为0
-//            endModel.dea = 0.0
-//        } else {
-//            let lastModel = datas[endIndex - 1]
-//            let last_dea  = lastModel.dea * (8.0 / 10.0)
-//            let end_dif   = endModel.dif * (2.0 / 10.0)
-//            endModel.dea  = last_dea + end_dif
-//        }
-//    }
+    private static func calculateExpma(index: Int, emaSmall: Int, emaBig: Int, datas: [KLineDataModel]) {
+        for (i, data) in datas.enumerated() {
+            if i == 0 {
+                data.ema_small = data.close
+                data.ema_big = data.close
+            } else {
+                let prev = datas[i - 1]
+                data.ema_small = NSNumber(value: (2.0 / Double(emaSmall + 1)) * (data.close.doubleValue - prev.ema_small.doubleValue) + prev.ema_small.doubleValue)
+                data.ema_big = NSNumber(value: (2.0 / Double(emaBig + 1)) * (data.close.doubleValue - prev.ema_big.doubleValue) + prev.ema_big.doubleValue)
+            }
+        }
+    }
+    
+    /**
+     DIF的EMA(DEA)
+
+     @param argu 计算平均值的平滑参数
+     @param endIndex 结束时的index
+     @param datas 需要处理的数据
+     */
+    private static func calculateDea(index: KlineIndexModel, argu: Int, end endIndex: Int, datas: [KLineDataModel]) {
+        
+        let endModel = datas[endIndex]
+        if endIndex == index.macd_l_paramter + index.macd_m_paramter - 2 {
+            // 第一日的dea为0
+            endModel.macdDea = NSNumber(value: 0.0)
+        } else {
+            let prev = datas[endIndex - 1]
+            let last_dea  = prev.macdDea.doubleValue * (8.0 / 10.0)
+            let end_dif   = endModel.macdDif.doubleValue * (2.0 / 10.0)
+            endModel.macdDea  = NSNumber(value: last_dea + end_dif)
+        }
+    }
     
     static func updateKDJ(index: KlineIndexModel, datas: [KLineDataModel]) {
         var prev_k: Double = 50
@@ -193,7 +271,7 @@ struct HBKlineIndexCalculateCommon {
             var rsiMaxEma: Double = 0
             
             for (index, data) in datas.enumerated() {
-                if index < num - 1  { continue }
+                if index < num { continue }
                 
                 let rMax = max(0, data.close.doubleValue - datas[index-1].close.doubleValue)
                 let rAbs = abs(data.close.doubleValue - datas[index-1].close.doubleValue)
@@ -216,7 +294,7 @@ struct HBKlineIndexCalculateCommon {
         let indexModel = index
         for (i, num) in indexModel.wrArray.enumerated() {
             for (index, data) in datas.enumerated() {
-                if index < num - 1 { continue }
+                if index < num { continue }
                 let startIndex = index - num + 1
                 var highPrice = Double.leastNormalMagnitude, lowPrice = Double.greatestFiniteMagnitude
 

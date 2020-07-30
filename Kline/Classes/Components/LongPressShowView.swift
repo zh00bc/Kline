@@ -119,7 +119,6 @@ class LongPressShowView: UIView {
 //                impactFeedbackgenerator.prepare()
             }
         }
-        update(time: KlineDateCommon.string(timestamp: kLineModel.time, period: period))
         pressShow(point: point, period: period, price: kLineModel.closePrice, timeCenterY: timeCenterY, lineWidth: lineWidth, kLineModel: kLineModel, pressedType: pressedType, pricePrecision: pricePrecision, amountPrecision: amountPrecision)
     }
     
@@ -127,6 +126,8 @@ class LongPressShowView: UIView {
         isHidden = false
         superview?.bringSubviewToFront(self)
         self.pressedType = pressedType
+        
+        update(time: KlineDateCommon.string(timestamp: kLineModel.time, period: period))
         
         messageView.amountPrecision = amountPrecision
         messageView.pricePrecision = pricePrecision

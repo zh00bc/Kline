@@ -124,9 +124,9 @@ class SlitherNumberView: UIView {
             numbers[4].text = KLineNumberFormatter.format(min, precision: pricePrecision)
         case .assistant:
             let step = ( max.doubleValue - min.doubleValue ) / 2.0
-            numbers[0].text = String(format: "%.2f", max)
-            numbers[1].text = String(format: "%.2f", min.doubleValue + step)
-            numbers[2].text = String(format: "%.2f", min)
+            numbers[0].text = KLineNumberFormatter.format(max, precision: 2, roundingMode: .down)
+            numbers[1].text = KLineNumberFormatter.format(min.doubleValue + step, precision: 2, roundingMode: .down)
+            numbers[2].text = KLineNumberFormatter.format(min, precision: 2, roundingMode: .down)
         }
     }
     

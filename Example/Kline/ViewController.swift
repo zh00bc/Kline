@@ -41,10 +41,27 @@ class ViewController: UIViewController {
             let symbol = self.symbolSegment.titleForSegment(at: sIndex)!
             let period = self.periodSegment.titleForSegment(at: pIndex)!
             self.dataSource.unWatch(topic: self.topic)
+            
             self.topic = "market.\(symbol).kline.\(period)"
             self.dataSource.request(symbol: symbol, period: period)
             self.dataSource.watch(symbol: symbol, period: period)
             
+            switch period {
+            case "1min":
+                self.dataSource.period = .min
+            case "4hour":
+                self.dataSource.period = .hour4
+            case "1day":
+                self.dataSource.period = .day
+            case "1week":
+                self.dataSource.period = .week
+            case "1mon":
+                self.dataSource.period = .month
+            default:
+                break
+            }
+            self.slitherView.updateAllViews()
+
         }).disposed(by: disposeBag)
         
         mainChartSegment.rx.selectedSegmentIndex.subscribe(onNext: { [weak self] (index) in

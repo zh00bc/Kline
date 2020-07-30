@@ -18,7 +18,7 @@ struct KLineNumberFormatter {
         case 100000.0...:
             return String(format: "%.0fK", volume.doubleValue / 1000.0)
         case 10000.0...:
-            return String(format: "%.1K", volume.doubleValue / 1000.0)
+            return String(format: "%.1fK", volume.doubleValue / 1000.0)
         default:
             return String(format: "%.\(amountPrecision)f", volume.doubleValue)
         }

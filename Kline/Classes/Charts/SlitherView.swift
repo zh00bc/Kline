@@ -316,12 +316,31 @@ extension SlitherView {
         
         longPressedPoint = point
         let lineData = mainChart.getCandle(for: longPressedPoint)
+        showTouch(lineData: lineData)
+        
         if let klineModel = dataSource.getData(from: lineData.nDataIndex) as? CandleLinePriceData {
             
             /// 计算选中点的价格
             let d = (mainChart.maxPrice.doubleValue - mainChart.minPrice.doubleValue) / Double(mainChart.bounds.height - Constants.mainChartTopSpace - Constants.mainChartBottomSpace)
             let p = mainChart.minPrice.doubleValue + Double((mainChart.frame.maxY - point.y)) * d
             longPressShowView.touchShow(point: CGPoint(x: lineData.x, y: Double(point.y - Constants.mainChartTopOffset - Constants.mainChartTopSpace)), period: period, price: NSNumber(value: p), timeCenterY: timeShowView.center.y, lineWidth: maxLineWidth, kLineModel: klineModel, pricePrecision: dataSource.pricePrecision, amountPrecision: dataSource.amountPrecision)
+        }
+    }
+    
+    func showTouch(lineData: LineData) {
+        guard let `dataSource` = dataSource else { return }
+        
+        let tips = dataSource.getCurrentTips(by: dataSource.mainChartType, arrayIndex: lineData.nDataIndex)
+        mainNumberView.messages = tips
+        
+        if !volumeChart.isHidden {
+            let tips = dataSource.getCurrentTips(by: dataSource.volumeChartType, arrayIndex: lineData.nDataIndex)
+            volumeNumberView.messages = tips
+        }
+        
+        if !assistantChart.isHidden {
+            let tips = dataSource.getCurrentTips(by: dataSource.assistantChartType, arrayIndex: lineData.nDataIndex)
+            assistantNumberView.messages = tips
         }
     }
     
@@ -341,6 +360,8 @@ extension SlitherView {
             longPressedPoint.x = point.x
         }
         let lineData = mainChart.getCandle(for: longPressedPoint)
+        showTouch(lineData: lineData)
+        
         if let klineModel = dataSource.getData(from: lineData.nDataIndex) as? CandleLinePriceData {
             longPressShowView.longPressShow(point: CGPoint(x: lineData.x, y: lineData.y), period: period, timeCenterY: timeShowView.center.y, lineWidth: maxLineWidth, kLineModel: klineModel, pricePrecision: dataSource.pricePrecision, amountPrecision: dataSource.amountPrecision)
         }

@@ -18,7 +18,6 @@ open class MarketDataManager {
     public var index = KlineIndexModel()
     public var period: PeriodType = .min
     
-    
     weak var delegate: MarketDataManagerDelegate?
 
     deinit {

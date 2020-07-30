@@ -53,11 +53,11 @@ extension KlineViewDataSource {
     }
     
     var pricePrecision: Int {
-        return 3
+        return 2
     }
     
     var amountPrecision: Int {
-        return 3
+        return 2
     }
     
     /// - Parameters:
@@ -129,7 +129,7 @@ extension KlineViewDataSource {
     func getTheLimitPrice(for chartType: ChartType, start: Int, end: Int, finish: (NSNumber, NSNumber) -> Void) {
         let count = numberOfAssistantLines(for: chartType)
         
-        var maxPrice: NSNumber = -1
+        var maxPrice: NSNumber = 0
         var minPrice: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
         var index = 0
         while index < count {
@@ -137,7 +137,6 @@ extension KlineViewDataSource {
             let kLineModels = backArray(type: type, period: period, chartType: chartType, index: index, start: start, end: end)
             
             for kLineModel in kLineModels {
-                
                 switch kLineModel {
                 case let line as LinePriceData:
                     if !line.isNullData {
@@ -332,8 +331,11 @@ extension KlineViewDataSource {
             let type = getType(index: index, chartType: chartType)
             let data = backData(type: type, period: period, chartType: chartType, index: index, timeIndex: arrayIndex)
             let lineName = indexModel.lineName(for: type, index: index)
-            let tip = tipModel(for: data, chartType: chartType, lineName: lineName)
-            tips.append(tip)
+            if !lineName.isEmpty {
+                let tip = tipModel(for: data, chartType: chartType, lineName: lineName)
+                tip.color = color(chartType: chartType, index: index)
+                tips.append(tip)
+            }
         }
         return tips
     }
@@ -399,12 +401,10 @@ extension KlineViewDataSource {
         case .assistant_macd:
             switch index {
             case 0:
-                return ColorManager.shared.klineMA3Color
-            case 1:
                 return ColorManager.shared.klineMA6Color
-            case 2:
+            case 1:
                 return ColorManager.shared.klineMA1Color
-            case 3:
+            case 2:
                 return ColorManager.shared.klineMA2Color
             default:
                 return ColorManager.shared.klineMA1Color
@@ -453,8 +453,8 @@ extension KlineViewDataSource {
     
     func backData(type: Int, period: PeriodType, chartType: ChartType, index: Int, timeIndex: Int) -> KLineModel {
         let klineDatas = periodData(period: period)
-        if index < klineDatas.count {
-            return KlineDataConversionCommon.kLineModel(for: klineDatas[index], type: type, index: index, chartType: chartType, period: period)
+        if timeIndex < klineDatas.count {
+            return KlineDataConversionCommon.kLineModel(for: klineDatas[timeIndex], type: type, index: index, chartType: chartType, period: period)
         }
         return KLineModel()
     }

@@ -16,14 +16,14 @@ struct KlineDateCommon {
         switch period {
         case .timeline:
             formatter.dateFormat = "HH:mm"
+        case .min:
+            formatter.dateFormat = "HH:mm"
         case .day, .week:
             formatter.dateFormat = "yyyy-MM-dd"
         case .month:
             formatter.dateFormat = "yyyy-MM-dd"
-        case .min, .min15, .min30, .hour, .hour4:
+        case .min5, .min15, .min30, .hour, .hour4:
             formatter.dateFormat = "MM-dd HH:mm"
-        default:
-            formatter.dateFormat = "yyyy/MM/dd HH:mm"
         }
         let string = formatter.string(from: date)
         return string

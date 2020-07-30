@@ -64,6 +64,10 @@ struct KlineDataConversionCommon {
                 columnar.lowPrice = d
                 columnar.priceUp = false
             }
+            
+            if d.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                columnar.isNullData = true
+            }
         }
                 
         return columnar
@@ -72,6 +76,7 @@ struct KlineDataConversionCommon {
     static func line(with data: KLineDataModel, type: Int, index: Int, chartType: ChartType) -> LinePriceData {
         let line = LinePriceData()
         let d = data.getValue(for: type, index: index)
+        
         if d.doubleValue != Double.greatestFiniteMagnitude {
             line.price = d
         } else {

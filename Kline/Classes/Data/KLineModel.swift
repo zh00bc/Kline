@@ -63,6 +63,10 @@ public class KLineDataModel {
     var macdDif: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
     var macdMacd: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
     
+    var ema_small: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    var ema_big: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    var ema_middle: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
+    
     var priceUp: Bool {
         return open.doubleValue <= close.doubleValue
     }
