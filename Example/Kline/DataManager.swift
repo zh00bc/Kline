@@ -95,6 +95,12 @@ extension MarketDataSource: HuobiSocketDelegate {
                 klines = Mapper<KlineTick>().mapArray(JSONArray: datas)
             }
             
+            if let ch = dict["ch"] as? String {
+                if !ch.contains(period.string) {
+                    return
+                }
+            }
+            
             let lines = klines.map { (tick) -> KLineDataModel in
                 let kline = KLineDataModel()
                 kline.open = tick.open

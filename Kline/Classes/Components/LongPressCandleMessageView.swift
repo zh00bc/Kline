@@ -14,19 +14,19 @@ class LongPressCandleMessageView: UIView {
     var pricePrecision: Int = 8
     var period: PeriodType = .min15
     
-    var dataSource: [(String, String)] = []
+    var dataSource: [(String, String, UIColor)] = []
     
     var priceData: CandleLinePriceData? {
         didSet {
             if let d = priceData {
-                let time = ("Date", "\(KlineDateCommon.string(timestamp: d.time, period: period))")
-                let open = ("Open", "\(KLineNumberFormatter.format(d.openPrice, precision: pricePrecision))")
-                let high = ("High", "\(KLineNumberFormatter.format(d.highPrice, precision: pricePrecision))")
-                let low = ("Low", "\(KLineNumberFormatter.format(d.lowPrice, precision: pricePrecision))")
-                let close = ("Close", "\(KLineNumberFormatter.format(d.closePrice, precision: pricePrecision))")
-                let change = ("Change", "\(KLineNumberFormatter.format(d.change, precision: pricePrecision))")
-                let changeRate = ("Change%", "\(KLineNumberFormatter.format(d.change, precision: 2))")
-                let executed = ("Executed", "\(KLineNumberFormatter.format(d.business, precision: amountPrecision))")
+                let time = ("Date", "\(KlineDateCommon.string(timestamp: d.time, period: period))", UIColor.white)
+                let open = ("Open", "\(KLineNumberFormatter.format(d.openPrice, precision: pricePrecision))", UIColor.white)
+                let high = ("High", "\(KLineNumberFormatter.format(d.highPrice, precision: pricePrecision))", UIColor.white)
+                let low = ("Low", "\(KLineNumberFormatter.format(d.lowPrice, precision: pricePrecision))", UIColor.white)
+                let close = ("Close", "\(KLineNumberFormatter.format(d.closePrice, precision: pricePrecision))", UIColor.white)
+                let change = ("Change", "\(KLineNumberFormatter.format(d.change, precision: pricePrecision, numberStyle: .decimal, positivePrefix: true))", d.priceUp ? ColorManager.shared.kColorShadeButtonGreenEnd : ColorManager.shared.kColorShadeButtonRedEnd)
+                let changeRate = ("Change%", "\(KLineNumberFormatter.format(d.changeRate, precision: 2, positivePrefix: true))", d.priceUp ? ColorManager.shared.kColorShadeButtonGreenEnd : ColorManager.shared.kColorShadeButtonRedEnd)
+                let executed = ("Executed", "\(KLineNumberFormatter.format(d.volume, precision: amountPrecision))", UIColor.white)
                 dataSource = [time, open, high, low, close, change, changeRate, executed]
             } else {
                 dataSource = []
@@ -52,6 +52,7 @@ class LongPressCandleMessageView: UIView {
         layer.borderColor = ColorManager.shared.kColorSecondaryText.cgColor
         backgroundColor = ColorManager.shared.klineIndexBackgroundGradientColorStart
         
+        tableView.contentInsetAdjustmentBehavior = .never
         tableView.isUserInteractionEnabled = false
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
@@ -80,6 +81,7 @@ extension LongPressCandleMessageView: UITableViewDataSource {
         let data = dataSource[indexPath.row]
         cell.nameLabel.text = data.0
         cell.valueLabel.text = data.1
+        cell.valueLabel.textColor = data.2
         return cell
     }
 }

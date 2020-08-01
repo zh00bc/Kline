@@ -28,6 +28,9 @@ open class KlineViewDataSource {
     public var assistantChartType: ChartType = .assistant_rsi
     public var volumeChartType: ChartType = .volume
     
+    private var queryMoreDate: Int = 0
+    private var historyCurrentDate: Int = 0
+    
     public init() { }
     
     func periodData(period: PeriodType) -> [KLineDataModel] {
@@ -415,9 +418,15 @@ extension KlineViewDataSource {
     }
 }
 
-extension KlineViewDataSource: MarketDataManagerDelegate {
+extension KlineViewDataSource {
     func update(kline: PeriodType, resetHistory: Bool) {
+        if kline != period {
+            return
+        } else {
+            
+        }
         delegate?.updateKline(reset: resetHistory)
+        
     }
 }
 
@@ -448,7 +457,9 @@ extension KlineViewDataSource {
             let kLineModel = KlineDataConversionCommon.kLineModel(for: last, type: type, index: index, chartType: chartType, period: period)
             return kLineModel
         }
-        return KLineModel()
+        let klineModel = KLineModel()
+        klineModel.isNullData = true
+        return klineModel
     }
     
     func backData(type: Int, period: PeriodType, chartType: ChartType, index: Int, timeIndex: Int) -> KLineModel {
@@ -456,7 +467,9 @@ extension KlineViewDataSource {
         if timeIndex < klineDatas.count {
             return KlineDataConversionCommon.kLineModel(for: klineDatas[timeIndex], type: type, index: index, chartType: chartType, period: period)
         }
-        return KLineModel()
+        let klineModel = KLineModel()
+        klineModel.isNullData = true
+        return klineModel
     }
     
     func index(for date: Int, period: PeriodType) -> Int {
@@ -479,13 +492,19 @@ extension KlineViewDataSource {
         return times
     }
     
+    // TODO: insert datas at index 0
+    
     public func append(klines: [KLineDataModel], period: PeriodType, bSub: Bool, deleteHistory: Bool) {
+        let klines = klines.sorted(by: { $0.time < $1.time })
         for kline in klines {
             kline.change = kline.close.subtracting(kline.open)
-            kline.changeRate = kline.change.dividing(by: kline.open.multiplying(by: 100))
+            kline.changeRate = kline.change.dividing(by: kline.open).multiplying(by: 100)
         }
         
         var originData = periodData(period: period)
+        if originData.count == 0 && bSub { // 防止更新的数据先到达，历史数据后到达造成线先展示一条k线
+            return
+        }
         if originData.count == 0 || deleteHistory {
             originDataPoolDic[period] = klines
             changeDic.removeAll()
@@ -515,13 +534,9 @@ extension KlineViewDataSource {
     /// 变更动画
     func initTrendAnimation(from: KLineDataModel, to: KLineDataModel, period: PeriodType) {
         
-        var changeModel = KLineDataChangeModel()
+        let changeModel = KLineDataChangeModel()
         
         var changeData = changeDic[period] ?? [:]
-        
-//        if let lastChangeModel = changeData[from.time] {
-//            changeModel = lastChangeModel
-//        }
         
         let step: NSDecimalNumber = 6.0
         changeModel.realData = to

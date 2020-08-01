@@ -12,6 +12,7 @@ struct Constants {
     static let mainChartTopOffset: CGFloat = 29.5
     static let mainChartTopSpace: CGFloat = 5.0
     static let mainChartBottomSpace: CGFloat = 5.0
+    static let defaultCandleLineWidth: CGFloat = 7.0
     static let maxLineWidth: CGFloat = 20.0
     static let minLineWidth: CGFloat = 1.0
     static let lineOffset: CGFloat = 2.0

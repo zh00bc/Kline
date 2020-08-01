@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D4EA39524CE763800384A7F /* KlineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4EA39424CE763800384A7F /* KlineModel.swift */; };
+		0DE5D06924D3FC270015CB36 /* LandscapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE5D06824D3FC270015CB36 /* LandscapeViewController.swift */; };
 		28909F3D24CC69D9002B59D6 /* HuobiSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28909F3C24CC69D9002B59D6 /* HuobiSocket.swift */; };
 		28909F4924CD26A3002B59D6 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28909F4824CD26A3002B59D6 /* DataManager.swift */; };
 		55595AD3D2D29915C069C20C /* Pods_Kline_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D673752283D086D3EFC740 /* Pods_Kline_Example.framework */; };
@@ -22,6 +23,7 @@
 		007052D307D2FDA52BFA33BC /* Kline.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Kline.podspec; path = ../Kline.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		02D673752283D086D3EFC740 /* Pods_Kline_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kline_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D4EA39424CE763800384A7F /* KlineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KlineModel.swift; sourceTree = "<group>"; };
+		0DE5D06824D3FC270015CB36 /* LandscapeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeViewController.swift; sourceTree = "<group>"; };
 		28909F3C24CC69D9002B59D6 /* HuobiSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuobiSocket.swift; sourceTree = "<group>"; };
 		28909F4824CD26A3002B59D6 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* Kline_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kline_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +76,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				0DE5D06824D3FC270015CB36 /* LandscapeViewController.swift */,
 				28909F3C24CC69D9002B59D6 /* HuobiSocket.swift */,
 				28909F4824CD26A3002B59D6 /* DataManager.swift */,
 				0D4EA39424CE763800384A7F /* KlineModel.swift */,
@@ -261,6 +264,7 @@
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				28909F3D24CC69D9002B59D6 /* HuobiSocket.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				0DE5D06924D3FC270015CB36 /* LandscapeViewController.swift in Sources */,
 				28909F4924CD26A3002B59D6 /* DataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

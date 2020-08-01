@@ -71,7 +71,7 @@ class LongPressShowView: UIView {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: Constants.timeViewHeight))
         label.font = CustomFonts.DIN.medium.font(ofSize: 10)
         label.textColor = ColorManager.shared.klinePrimaryTextColor
-        label.textAlignment = .center
+//        label.textAlignment = .center
         label.layer.borderColor = ColorManager.shared.kColorSecondaryText.cgColor
         label.layer.borderWidth = 1.0
         label.layer.cornerRadius = 3.0
@@ -110,16 +110,17 @@ class LongPressShowView: UIView {
     
     func longPressShow(point: CGPoint, period: PeriodType, timeCenterY: CGFloat, lineWidth: CGFloat, kLineModel: CandleLinePriceData, pricePrecision: Int, amountPrecision: Int) {
         if pressedType != .long {
-//            impactFeedbackgenerator.impactOccurred()
-//            impactFeedbackgenerator.prepare()
+            impactFeedbackgenerator.prepare()
+            impactFeedbackgenerator.impactOccurred()
         }
+        
         if period != .timeline {
             if kLineModel.time != messageView.priceData?.time {
-//                impactFeedbackgenerator.impactOccurred()
-//                impactFeedbackgenerator.prepare()
+                impactFeedbackgenerator.prepare()
+                impactFeedbackgenerator.impactOccurred()
             }
         }
-        pressShow(point: point, period: period, price: kLineModel.closePrice, timeCenterY: timeCenterY, lineWidth: lineWidth, kLineModel: kLineModel, pressedType: pressedType, pricePrecision: pricePrecision, amountPrecision: amountPrecision)
+        pressShow(point: point, period: period, price: kLineModel.closePrice, timeCenterY: timeCenterY, lineWidth: lineWidth, kLineModel: kLineModel, pressedType: .long, pricePrecision: pricePrecision, amountPrecision: amountPrecision)
     }
     
     func pressShow(point: CGPoint, period: PeriodType, price: NSNumber, timeCenterY: CGFloat, lineWidth: CGFloat, kLineModel: CandleLinePriceData, pressedType: PressedType, pricePrecision: Int, amountPrecision: Int) {
@@ -183,7 +184,7 @@ class LongPressShowView: UIView {
             
             messageView.snp.remakeConstraints {
                 $0.left.equalToSuperview().offset(5)
-                $0.top.equalToSuperview().offset(27)
+                $0.top.equalToSuperview().offset(30)
                 $0.width.equalTo(Constants.candleMessageViewWidth)
                 $0.height.equalTo(Constants.candleMessageViewHeight)
             }

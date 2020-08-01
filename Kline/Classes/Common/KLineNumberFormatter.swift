@@ -24,16 +24,21 @@ struct KLineNumberFormatter {
         }
     }
     
-    static func format(_ number: NSNumber, precision: Int, numberStyle: NumberFormatter.Style = .none, roundingMode: NumberFormatter.RoundingMode = .down) -> String {
+    static func format(_ number: NSNumber, precision: Int, numberStyle: NumberFormatter.Style = .none, roundingMode: NumberFormatter.RoundingMode = .down, positivePrefix: Bool = false) -> String {
         formatter.numberStyle = numberStyle
         formatter.minimumFractionDigits = precision
         formatter.maximumFractionDigits = precision
         formatter.roundingMode = roundingMode
+        if positivePrefix {
+            formatter.positivePrefix = "+"
+        } else {
+            formatter.positivePrefix = ""
+        }
         return formatter.string(from: number) ?? ""
     }
     
-    static func format(_ number: Double, precision: Int, numberStyle: NumberFormatter.Style = .none, roundingMode: NumberFormatter.RoundingMode = .down) -> String {
-        return format(NSNumber(value: number), precision: precision, numberStyle: numberStyle, roundingMode: roundingMode)
+    static func format(_ number: Double, precision: Int, numberStyle: NumberFormatter.Style = .none, roundingMode: NumberFormatter.RoundingMode = .down, positivePrefix: Bool = false) -> String {
+        return format(NSNumber(value: number), precision: precision, numberStyle: numberStyle, roundingMode: roundingMode, positivePrefix: positivePrefix)
     }
 }
 

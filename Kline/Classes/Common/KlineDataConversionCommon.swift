@@ -30,7 +30,9 @@ struct KlineDataConversionCommon {
         candle.closePrice = data.close
         candle.time = data.time
         candle.change = data.change
+        candle.changeRate = data.changeRate
         candle.volume = data.amount
+        candle.priceUp = data.priceUp
         return candle
     }
     

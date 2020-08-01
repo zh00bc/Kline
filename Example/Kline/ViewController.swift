@@ -29,8 +29,9 @@ class ViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
+//        navigationController?.setNavigationBarHidden(true, animated: true)
         
-        slitherView = SlitherView(frame: CGRect(x: 0, y: 250, width: UIScreen.main.bounds.width, height: 485))
+        slitherView = SlitherView(frame: CGRect(x: 0, y: 300, width: UIScreen.main.bounds.width, height: 520))
         view.addSubview(slitherView)
         
         dataSource.delegate = self
@@ -41,10 +42,6 @@ class ViewController: UIViewController {
             let symbol = self.symbolSegment.titleForSegment(at: sIndex)!
             let period = self.periodSegment.titleForSegment(at: pIndex)!
             self.dataSource.unWatch(topic: self.topic)
-            
-            self.topic = "market.\(symbol).kline.\(period)"
-            self.dataSource.request(symbol: symbol, period: period)
-            self.dataSource.watch(symbol: symbol, period: period)
             
             switch period {
             case "1min":
@@ -60,28 +57,12 @@ class ViewController: UIViewController {
             default:
                 break
             }
-            self.slitherView.updateAllViews()
-
-        }).disposed(by: disposeBag)
-        
-        mainChartSegment.rx.selectedSegmentIndex.subscribe(onNext: { [weak self] (index) in
-            guard let `self` = self else { return }
-            let title = self.mainChartSegment.titleForSegment(at: index)
-            if title == "BOLL" {
-                self.dataSource.mainChartType = .main_boll
-            } else if title == "MA" {
-                self.dataSource.mainChartType = .main_ma
-            } else {
-                self.dataSource.mainChartType = .main
-            }
-            self.slitherView.reloadData()
-        }).disposed(by: disposeBag)
-        
-        assistantChartSegment.rx.selectedSegmentIndex.subscribe(onNext: { [weak self] (index) in
-            guard let `self` = self else { return }
-            let title = self.assistantChartSegment.titleForSegment(at: index)
             
-            switch title {
+            self.topic = "market.\(symbol).kline.\(period)"
+            self.dataSource.request(symbol: symbol, period: period)
+            self.dataSource.watch(symbol: symbol, period: period)
+            
+            switch symbol {
             case "MACD":
                 self.dataSource.assistantChartType = .assistant_macd
             case "KDJ":
@@ -95,9 +76,55 @@ class ViewController: UIViewController {
             default:
                 break
             }
+            
+            
+            debugPrint("change period")
+            self.slitherView.resetData()
             self.slitherView.updateAllViews()
+
         }).disposed(by: disposeBag)
+        
+//        mainChartSegment.rx.selectedSegmentIndex.subscribe(onNext: { [weak self] (index) in
+//            guard let `self` = self else { return }
+//            let title = self.mainChartSegment.titleForSegment(at: index)
+//            if title == "BOLL" {
+//                self.dataSource.mainChartType = .main_boll
+//            } else if title == "MA" {
+//                self.dataSource.mainChartType = .main_ma
+//            } else {
+//                self.dataSource.mainChartType = .main
+//            }
+//            self.slitherView.reloadData()
+//        }).disposed(by: disposeBag)
+//
+//        assistantChartSegment.rx.selectedSegmentIndex.subscribe(onNext: { [weak self] (index) in
+//            guard let `self` = self else { return }
+//            let title = self.assistantChartSegment.titleForSegment(at: index)
+//
+//            switch title {
+//            case "MACD":
+//                self.dataSource.assistantChartType = .assistant_macd
+//            case "KDJ":
+//                self.dataSource.assistantChartType = .assistant_kdj
+//            case "RSI":
+//                self.dataSource.assistantChartType = .assistant_rsi
+//            case "WR":
+//                self.dataSource.assistantChartType = .assistant_wr
+//            case "Hide":
+//                self.dataSource.assistantChartType = .assistant_hide
+//            default:
+//                break
+//            }
+//            self.slitherView.updateAllViews()
+//        }).disposed(by: disposeBag)
     }
+    
+    @IBAction func landScape(_ sender: Any) {
+        let vc = LandscapeViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
 }
 
 extension ViewController: KlineViewDataSourceDelegate {

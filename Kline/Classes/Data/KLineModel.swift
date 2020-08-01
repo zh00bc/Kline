@@ -172,11 +172,13 @@ class CandleLinePriceData: KLineModel {
     var volume: NSNumber = 0.0
     var business: NSNumber = 0.0
     var change: NSNumber = 0.0
+    var changeRate: NSNumber = 0.0
     var time: Int = 0
     var closePrice: NSNumber = 0.0
     var openPrice: NSNumber = 0.0
     var lowPrice: NSNumber = 0.0
     var highPrice: NSNumber = 0.0
+    var priceUp: Bool = false
 }
 
 class ColumnarPriceData: KLineModel {

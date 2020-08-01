@@ -110,6 +110,12 @@ open class SlitherView: UIView {
         setTimeShow(start: contentShowIndex, end: endIndex, showHistory: showHistory)
         showNewestPriceMessage()
         showLastPrice(contentShowIndex: contentShowIndex)
+        
+        if longPressShowView.pressedType == .long {
+            showLongPressed(point: longPressedPoint)
+        } else if longPressShowView.pressedType == .short {
+            touchPoint(longPressedPoint)
+        }
     }
     
     func show() {
@@ -160,13 +166,8 @@ open class SlitherView: UIView {
         contentXOffset = lineInterval * CGFloat(startIndex)
         
         scrollView.contentOffset = CGPoint(x: contentXOffset, y: 0)
-        
-        if longPressShowView.pressedType == .long {
-            showLongPressed(point: longPressedPoint)
-        }
-        
+    
         updateKlinePosition()
-        
         
     }
     
@@ -260,7 +261,6 @@ extension SlitherView {
     @objc func onPinch(recognizer: UIPinchGestureRecognizer) {
         switch recognizer.state {
         case .began:
-            longPressShowView.hide()
             lastPinchScale = 1.0
         case .changed:
             let scale = recognizer.scale
@@ -512,12 +512,15 @@ extension SlitherView {
             assistantChart.reloadSubViews()
         }
         reloadData()
+        
     }
     
     func resetMaxLineWidth() {
-        if let maxWidth = dataSource?.maxWidth {
-            self.maxLineWidth = maxWidth
-        }
+//        if let maxWidth = dataSource?.maxWidth {
+//            self.maxLineWidth = maxWidth
+//        }
+        
+        self.maxLineWidth = Constants.defaultCandleLineWidth
     }
     
     func showNewestPriceMessage() {
@@ -547,7 +550,6 @@ extension SlitherView {
             break
         }
     }
-    
     
     
     /// 显示最新价格指示线
@@ -594,6 +596,9 @@ extension SlitherView {
             } else {
                 gotoLatestButton.isHidden = true
             }
+        } else {
+            latestPriceView.isHidden = true
+            gotoLatestButton.isHidden = true
         }
     }
 }

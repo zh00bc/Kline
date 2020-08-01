@@ -110,23 +110,33 @@ class SlitherNumberView: UIView {
             } else {
                 numbers[0].text = ""
             }
-            if min.doubleValue > 0 {
-                numbers[1].text = KLineNumberFormatter.format(volume: min, amountPrecision: amountPrecision)
-            } else {
-                numbers[1].text = ""
-            }
         case .main:
-            let step = ( max.doubleValue - min.doubleValue ) / Double( yLineNumber - 1 )
-            numbers[0].text = KLineNumberFormatter.format(max, precision: pricePrecision)
-            numbers[1].text = KLineNumberFormatter.format(max.doubleValue - step, precision: pricePrecision)
-            numbers[2].text = KLineNumberFormatter.format(max.doubleValue - 2 * step, precision: pricePrecision)
-            numbers[3].text = KLineNumberFormatter.format(max.doubleValue - 3 * step, precision: pricePrecision)
-            numbers[4].text = KLineNumberFormatter.format(min, precision: pricePrecision)
+            if max.compare(min) != .orderedAscending {
+                let step = ( max.doubleValue - min.doubleValue ) / Double( yLineNumber - 1 )
+                numbers[0].text = KLineNumberFormatter.format(max, precision: pricePrecision)
+                numbers[1].text = KLineNumberFormatter.format(max.doubleValue - step, precision: pricePrecision)
+                numbers[2].text = KLineNumberFormatter.format(max.doubleValue - 2 * step, precision: pricePrecision)
+                numbers[3].text = KLineNumberFormatter.format(max.doubleValue - 3 * step, precision: pricePrecision)
+                numbers[4].text = KLineNumberFormatter.format(min, precision: pricePrecision)
+            } else {
+                numbers[0].text = ""
+                numbers[1].text = ""
+                numbers[2].text = ""
+                numbers[3].text = ""
+                numbers[4].text = ""
+            }
+            
         case .assistant:
-            let step = ( max.doubleValue - min.doubleValue ) / 2.0
-            numbers[0].text = KLineNumberFormatter.format(max, precision: 2, roundingMode: .down)
-            numbers[1].text = KLineNumberFormatter.format(min.doubleValue + step, precision: 2, roundingMode: .down)
-            numbers[2].text = KLineNumberFormatter.format(min, precision: 2, roundingMode: .down)
+            if max.compare(min) != .orderedAscending {
+                let step = ( max.doubleValue - min.doubleValue ) / 2.0
+                numbers[0].text = KLineNumberFormatter.format(max, precision: 2, roundingMode: .down)
+                numbers[1].text = KLineNumberFormatter.format(min.doubleValue + step, precision: 2, roundingMode: .down)
+                numbers[2].text = KLineNumberFormatter.format(min, precision: 2, roundingMode: .down)
+            } else {
+                numbers[0].text = ""
+                numbers[1].text = ""
+                numbers[2].text = ""
+            }
         }
     }
     
