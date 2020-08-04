@@ -40,27 +40,27 @@ struct HBKlineIndexCalculateCommon {
                 if j < num - 1 { continue }
                 switch i {
                 case 0:
-                    if j < datas.count - 1 && !data.priceMa1.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                    if !data.priceMa1.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
                         continue
                     }
                 case 1:
-                    if j < datas.count - 1 && !data.priceMa2.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                    if !data.priceMa2.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
                         continue
                     }
                 case 2:
-                    if j < datas.count - 1 && !data.priceMa3.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                    if !data.priceMa3.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
                         continue
                     }
                 case 3:
-                    if j < datas.count - 1 && !data.priceMa4.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                    if !data.priceMa4.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
                         continue
                     }
                 case 4:
-                    if j < datas.count - 1 && !data.priceMa5.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                    if !data.priceMa5.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
                         continue
                     }
                 case 5:
-                    if j < datas.count - 1 && !data.priceMa6.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                    if !data.priceMa6.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
                         continue
                     }
                 default:
@@ -100,11 +100,11 @@ struct HBKlineIndexCalculateCommon {
                     continue
                 }
                 if i == 0 {
-                    if j < datas.count - 1 && !data.amountMa1.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                    if !data.amountMa1.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
                         continue
                     }
                 } else {
-                    if j < datas.count - 1 && !data.amountMa2.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                    if !data.amountMa2.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
                         continue
                     }
                 }
@@ -129,7 +129,7 @@ struct HBKlineIndexCalculateCommon {
             if i < index.boll_n_parameter - 1 {
                 continue
             }
-            if i < datas.count - 1 && !data.bollSummary.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+            if !data.bollSummary.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
                 continue
             }
             data.bollSummary = calculateAveragePrice(count: index.boll_n_parameter, endIndex: i, datas: datas)
@@ -181,13 +181,13 @@ struct HBKlineIndexCalculateCommon {
                 continue
             }
             if i < index.macd_l_paramter + index.macd_m_paramter - 2 {
-                if i < datas.count - 1 && !data.macdDif.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                if !data.macdDif.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
                     continue
                 }
                 self.calculateExpma(index: i, emaSmall: index.macd_s_paramter, emaBig: index.macd_l_paramter, datas: datas)
                 data.macdDif = NSNumber(value: data.ema_small.doubleValue - data.ema_big.doubleValue)
             } else {
-                if i < datas.count - 1 && !data.macdMacd.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                if !data.macdMacd.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
                     continue
                 }
                 self.calculateExpma(index: i, emaSmall: index.macd_s_paramter, emaBig: index.macd_l_paramter, datas: datas)
@@ -246,6 +246,10 @@ struct HBKlineIndexCalculateCommon {
         
         for (i, data) in datas.enumerated() {
             if i < index.kdj_n - 1 { continue }
+            
+            if !data.kdjD.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                continue
+            }
             //计算RSV值
             if let rsv = self.getRSV(index.kdj_n, index: i, datas: datas) {
                 //计算K,D,J值
@@ -295,6 +299,21 @@ struct HBKlineIndexCalculateCommon {
         for (i, num) in indexModel.wrArray.enumerated() {
             for (index, data) in datas.enumerated() {
                 if index < num { continue }
+                
+                if i == 0 {
+                    if !data.wr1.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                        continue
+                    }
+                } else if i == 1 {
+                    if !data.wr2.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                        continue
+                    }
+                } else {
+                    if !data.wr3.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
+                        continue
+                    }
+                }
+                
                 let startIndex = index - num + 1
                 var highPrice = Double.leastNormalMagnitude, lowPrice = Double.greatestFiniteMagnitude
 

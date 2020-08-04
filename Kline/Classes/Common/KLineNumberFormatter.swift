@@ -20,7 +20,10 @@ struct KLineNumberFormatter {
         case 10000.0...:
             return String(format: "%.1fK", volume.doubleValue / 1000.0)
         default:
-            return String(format: "%.\(amountPrecision)f", volume.doubleValue)
+            formatter.maximumFractionDigits = amountPrecision
+            formatter.minimumFractionDigits = amountPrecision
+            formatter.roundingMode = .down
+            return formatter.string(from: volume) ?? ""
         }
     }
     

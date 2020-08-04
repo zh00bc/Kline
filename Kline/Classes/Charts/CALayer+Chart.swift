@@ -12,9 +12,14 @@ import CoreGraphics
 enum LineType: Int {
     case solid = 0
     case candle = 1
+    /// 交易量柱状图
     case columnar = 2
+    /// 分时线
     case area = 3
+    /// macd柱状图
     case separateColumnar = 4
+    /// 分时线交易量柱状图
+    case minuteColumnar = 5
 }
 
 class KLine: CAShapeLayer {

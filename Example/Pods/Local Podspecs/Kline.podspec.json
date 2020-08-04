@@ -32,6 +32,9 @@
   "dependencies": {
     "SnapKit": [
 
+    ],
+    "Localize-Swift": [
+
     ]
   },
   "swift_version": "5.0"

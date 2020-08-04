@@ -16,6 +16,8 @@ class AreaLine: KLine {
     let yesterdayShapeLayer = CAShapeLayer()
     
     override func setup() {
+        masksToBounds = true
+
         addSublayer(gradientLayer)
         gradientLayer.mask = gradientMask
         let colors = [ColorManager.shared.klineMinuteDropdownGradientColor1.cgColor,
@@ -34,7 +36,7 @@ class AreaLine: KLine {
         addSublayer(yesterdayShapeLayer)
         todayShapeLayer.fillColor = UIColor.clear.cgColor
         todayShapeLayer.lineWidth = 1.0
-        todayShapeLayer.strokeColor = ColorManager.shared.klineIndexSettingTextColor.cgColor
+        todayShapeLayer.strokeColor = ColorManager.shared.klineMinuteLineColor.cgColor
         todayShapeLayer.shadowColor = ColorManager.shared.klineMinuteShadowColor.cgColor
         todayShapeLayer.shadowOffset = CGSize(width: 0.0, height: 6.0)
         todayShapeLayer.shadowRadius = 8.0

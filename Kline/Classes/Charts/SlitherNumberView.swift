@@ -239,8 +239,7 @@ class SlitherNumberView: UIView {
         switch type {
         case .main:
             gradientLayer.colors = [ColorManager.shared.klineMainBackgroundGradientColor1,
-                                    ColorManager.shared.klineMainBackgroundGradientColor2,
-                                    ColorManager.shared.klineMainBackgroundGradientColor3]
+                                    ColorManager.shared.klineMainBackgroundGradientColor2]
         case .volume:
             gradientLayer.colors = [ColorManager.shared.klineVolumeBackgroundGradientColor1,
                                     ColorManager.shared.klineVolumeBackgroundGradientColor2]

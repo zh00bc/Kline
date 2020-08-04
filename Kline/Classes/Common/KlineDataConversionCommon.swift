@@ -48,15 +48,14 @@ struct KlineDataConversionCommon {
         
         if type == 14 { /// volume
             if period == .timeline {
+                /// 分时线交易量柱状图颜色不一样
                 columnar.priceUp = false
             } else {
                 columnar.priceUp = data.priceUp
             }
             
             columnar.highPrice = d
-        }
-        
-        if type == 8 { /// macd
+        } else if type == 8 { /// macd
             if d.compare(NSNumber(value: 0)) == .orderedDescending {
                 columnar.highPrice = d
                 columnar.lowPrice = 0
@@ -70,6 +69,8 @@ struct KlineDataConversionCommon {
             if d.isEqual(to: NSNumber(value: Double.greatestFiniteMagnitude)) {
                 columnar.isNullData = true
             }
+        } else {
+            columnar.isNullData = true
         }
                 
         return columnar

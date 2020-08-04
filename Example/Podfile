@@ -11,4 +11,5 @@ target 'Kline_Example' do
   pod 'GzipSwift'
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'Localize-Swift'
 end

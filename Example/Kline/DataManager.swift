@@ -95,9 +95,18 @@ extension MarketDataSource: HuobiSocketDelegate {
                 klines = Mapper<KlineTick>().mapArray(JSONArray: datas)
             }
             
-            if let ch = dict["ch"] as? String {
-                if !ch.contains(period.string) {
-                    return
+            var p: PeriodType = .min
+            if let rep = (dict["rep"] ?? dict["ch"]) as? String {
+                if rep.contains("4hour") {
+                    p = .hour4
+                } else if rep.contains("1min") && period == .timeline {
+                    p = .timeline
+                } else if rep.contains("1min") {
+                    p = .min
+                } else if rep.contains("1week") {
+                    p = .week
+                } else if rep.contains("1mon") {
+                    p = .month
                 }
             }
             
@@ -114,7 +123,12 @@ extension MarketDataSource: HuobiSocketDelegate {
                 return kline
             }
             
-            append(klines: lines, period: period, bSub: isSub, deleteHistory: deleteHistory)
+            self.append(klines: lines, period: p, bSub: isSub, deleteHistory: deleteHistory)
+
+            
+//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) { [weak self] in
+//                guard let `self` = self else { return }
+//            }
             
         } catch(let err) {
             print(content)

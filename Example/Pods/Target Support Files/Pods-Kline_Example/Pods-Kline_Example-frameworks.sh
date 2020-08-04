@@ -199,6 +199,7 @@ fi
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/GzipSwift/Gzip.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Kline/Kline.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Localize-Swift/Localize_Swift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework"
   install_framework "${PODS_ROOT}/Reveal-SDK/RevealServer/iOS/RevealServer.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework"
@@ -210,6 +211,7 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/GzipSwift/Gzip.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Kline/Kline.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Localize-Swift/Localize_Swift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework"
   install_framework "${PODS_ROOT}/Reveal-SDK/RevealServer/iOS/RevealServer.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework"

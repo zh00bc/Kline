@@ -1,7 +1,9 @@
 PODS:
   - GzipSwift (5.1.1)
   - Kline (0.1.0):
+    - Localize-Swift
     - SnapKit
+  - Localize-Swift (3.1.0)
   - ObjectMapper (4.2.0)
   - Reveal-SDK (26)
   - RxCocoa (5.1.1):
@@ -16,6 +18,7 @@ PODS:
 DEPENDENCIES:
   - GzipSwift
   - Kline (from `../`)
+  - Localize-Swift
   - ObjectMapper
   - Reveal-SDK
   - RxCocoa
@@ -26,6 +29,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - GzipSwift
+    - Localize-Swift
     - ObjectMapper
     - Reveal-SDK
     - RxCocoa
@@ -40,7 +44,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   GzipSwift: 893f3e48e597a1a4f62fafcb6514220fcf8287fa
-  Kline: a97afccced1e349ea70e4fc0aec1e78b596b431c
+  Kline: 6eaebe60ef6a9739066009cb5be89babd4c20810
+  Localize-Swift: 4bed4f0ccac8be2ec3517ee359da80ba2adb0fae
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   Reveal-SDK: 5f94f14aff3d5f2a49f246edcd266fa4472679e9
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
@@ -49,6 +54,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Starscream: ef06f0961fff0880bca0604416d61141e4faca67
 
-PODFILE CHECKSUM: 0e161e9322e4ff1bebda4cfb1da97dec2ee47d39
+PODFILE CHECKSUM: 04d652bcc363b117787679aa00aecff9ef0376ea
 
 COCOAPODS: 1.9.3

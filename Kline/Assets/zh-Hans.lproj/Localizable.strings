@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  Kline
+
+  Created by zhangj on 2020/8/4.
+  Copyright © 2020 CocoaPods. All rights reserved.
+*/
+
+"kline-date" = "时间";
+"kline-open" = "开";
+"kline-high" = "高";
+"kline-low" = "低";
+"kline-close" = "收";
+"kline-change" = "涨跌额";
+"kline-change%" = "涨跌幅";
+"kline-volume" = "成交量";

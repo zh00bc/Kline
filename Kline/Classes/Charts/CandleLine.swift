@@ -44,8 +44,8 @@ class CandleLine: KLine {
         downLineLayer.strokeColor = ColorManager.shared.kColorShadeButtonRedEnd.cgColor
         downRectLayer.strokeColor = ColorManager.shared.kColorShadeButtonRedEnd.cgColor
         
-        maxLabel.textColor = UIColor.white
-        minLabel.textColor = UIColor.white
+        maxLabel.textColor = ColorManager.shared.klineMinMaxValueColor
+        minLabel.textColor = ColorManager.shared.klineMinMaxValueColor
         maxLabel.font = CustomFonts.DIN.medium.font(ofSize: 11)
         minLabel.font = CustomFonts.DIN.medium.font(ofSize: 11)
         
@@ -86,7 +86,6 @@ class CandleLine: KLine {
     
     override func setNeedsDisplay() {
         super.setNeedsDisplay()
-
         let upRectPath = UIBezierPath()
         let upLinePath = UIBezierPath()
         let downRectPath = UIBezierPath()

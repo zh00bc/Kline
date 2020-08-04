@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import Kline
+import Localize_Swift
 
 class ViewController: UIViewController {
     @IBOutlet weak var periodSegment: UISegmentedControl!
@@ -17,7 +18,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var assistantChartSegment: UISegmentedControl!
     @IBOutlet weak var symbolSegment: UISegmentedControl!
     
-    let activity = UIActivityIndicatorView(style: .gray)
+    let activity = UIActivityIndicatorView(style: .whiteLarge)
     
     let dataSource = MarketDataSource()
     
@@ -29,31 +30,41 @@ class ViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-//        navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        Localize.setCurrentLanguage("ko")
         
         slitherView = SlitherView(frame: CGRect(x: 0, y: 300, width: UIScreen.main.bounds.width, height: 520))
+        slitherView.delegate = self
         view.addSubview(slitherView)
+        
+        activity.hidesWhenStopped = true
+        view.addSubview(activity)
+        activity.snp.makeConstraints {
+            $0.center.equalTo(slitherView)
+        }
         
         dataSource.delegate = self
         slitherView.dataSource = dataSource
         
-        Observable.combineLatest(symbolSegment.rx.selectedSegmentIndex, periodSegment.rx.selectedSegmentIndex).subscribe(onNext: { [weak self] (sIndex, pIndex) in
+        Observable.combineLatest(symbolSegment.rx.selectedSegmentIndex, assistantChartSegment.rx.selectedSegmentIndex, periodSegment.rx.selectedSegmentIndex).subscribe(onNext: { [weak self] (bIndex, sIndex, pIndex) in
             guard let `self` = self else { return }
-            let symbol = self.symbolSegment.titleForSegment(at: sIndex)!
-            let period = self.periodSegment.titleForSegment(at: pIndex)!
+            let symbol = self.symbolSegment.titleForSegment(at: bIndex)!
+            let assistant = self.assistantChartSegment.titleForSegment(at: sIndex)!
+            var period = self.periodSegment.titleForSegment(at: pIndex)!
             self.dataSource.unWatch(topic: self.topic)
             
             switch period {
             case "1min":
-                self.dataSource.period = .min
+                self.dataSource.change(period: .min)
             case "4hour":
-                self.dataSource.period = .hour4
-            case "1day":
-                self.dataSource.period = .day
+                self.dataSource.change(period: .hour4)
+            case "timeline":
+                self.dataSource.change(period: .timeline)
+                period = "1min"
             case "1week":
-                self.dataSource.period = .week
+                self.dataSource.change(period: .week)
             case "1mon":
-                self.dataSource.period = .month
+                self.dataSource.change(period: .month)
             default:
                 break
             }
@@ -62,7 +73,7 @@ class ViewController: UIViewController {
             self.dataSource.request(symbol: symbol, period: period)
             self.dataSource.watch(symbol: symbol, period: period)
             
-            switch symbol {
+            switch assistant {
             case "MACD":
                 self.dataSource.assistantChartType = .assistant_macd
             case "KDJ":
@@ -77,8 +88,7 @@ class ViewController: UIViewController {
                 break
             }
             
-            
-            debugPrint("change period")
+            self.activity.startAnimating()
             self.slitherView.resetData()
             self.slitherView.updateAllViews()
 
@@ -134,9 +144,24 @@ extension ViewController: KlineViewDataSourceDelegate {
     
     func updateKline(reset: Bool) {
         if reset {
+            activity.stopAnimating()
             slitherView.resetData()
         } else {
             slitherView.reloadData()
         }
+    }
+}
+
+extension ViewController: SlitherViewDelegate {
+    func slitherViewWillBeginDragging(_ slitherView: SlitherView) {
+        
+    }
+    
+    func slitherView(_ slitherView: SlitherView, didSelectAt index: Int) {
+        
+    }
+    
+    func hideAllPopup() {
+        activity.stopAnimating()
     }
 }

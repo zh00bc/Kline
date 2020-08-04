@@ -83,6 +83,8 @@ open class HuobiSocket: NSObject {
 extension HuobiSocket: WebSocketDelegate {
     public func didReceive(event: WebSocketEvent, client: WebSocket) {
         switch event {
+        case .disconnected:
+            debugPrint(event)
         case .connected:
             debugPrint(event)
             delegate?.huobiSocketDidConnected(self)

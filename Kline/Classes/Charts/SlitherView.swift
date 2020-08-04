@@ -125,15 +125,15 @@ open class SlitherView: UIView {
     func reduceKline() {
         if maxLineWidth > Constants.minLineWidth {
             maxLineWidth = maxLineWidth - 1.0
+            zoomKline()
         }
-        zoomKline()
     }
     
     func amplifyKline() {
         if maxLineWidth < Constants.maxLineWidth {
             maxLineWidth = maxLineWidth + 1.0
+            zoomKline()
         }
-        zoomKline()
     }
     
     func zoomKline() {
@@ -175,7 +175,7 @@ open class SlitherView: UIView {
         guard let `dataSource` = dataSource else {
             return
         }
-        
+                
         let width = CGFloat(dataSource.pointCount) * lineInterval + rightSpacing
         scrollView.contentSize = CGSize(width: width, height: 0.0)
         contentShowIndex = Int(scrollView.contentOffset.x / lineInterval)
@@ -244,7 +244,8 @@ extension SlitherView: UIScrollViewDelegate {
     
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         longPressShowView.hide()
-        self.delegate?.slitherViewWillBeginDragging(self)
+        delegate?.slitherViewWillBeginDragging(self)
+        delegate?.hideAllPopup()
     }
     
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {

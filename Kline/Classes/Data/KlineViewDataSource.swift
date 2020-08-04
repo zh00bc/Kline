@@ -51,6 +51,10 @@ extension KlineViewDataSource {
         lineWidth = maxWidth
     }
     
+    public func change(period: PeriodType) {
+        self.period = period
+    }
+    
     func getData(from index: Int) -> KLineModel {
         return backData(type: 0, period: period, chartType: mainChartType, index: index, timeIndex: index)
     }
@@ -60,7 +64,7 @@ extension KlineViewDataSource {
     }
     
     var amountPrecision: Int {
-        return 2
+        return 6
     }
     
     /// - Parameters:
@@ -68,7 +72,7 @@ extension KlineViewDataSource {
     ///   - chartType: ChartType
     /// - Returns: KLine
     func assistantChartViewLine(from index: Int, chartType: ChartType) -> KLine {
-        let type = getType(index: index, chartType: chartType)
+        let type = KlineTypeCommon.lineType(for: chartType, index: index)
         var kLine: KLine
         switch type {
         case 0:
@@ -81,13 +85,13 @@ extension KlineViewDataSource {
             kLine = ColumnarLine(type: .separateColumnar)
         case 14:
             if period == .timeline {
-                kLine = ColumnarLine(type: .separateColumnar)
+                kLine = ColumnarLine(type: .minuteColumnar)
             } else {
                 kLine = ColumnarLine(type: .columnar)
             }
         default:
             kLine = SolidLine(type: .solid)
-            kLine.strokeColor = color(chartType: chartType, index: index).cgColor
+            kLine.strokeColor = KlineTypeCommon.lineColor(for: chartType, index: index).cgColor
         }
         kLine.pricePrecision = pricePrecision
         kLine.index = index
@@ -111,12 +115,12 @@ extension KlineViewDataSource {
     }
     
     func backArray(for chartType: ChartType, index: Int, start: Int, end: Int) -> [KLineModel] {
-        let type = getType(index: index, chartType: chartType)
+        let type = KlineTypeCommon.lineType(for: chartType, index: index)
         return backArray(type: type, period: period, chartType: chartType, index: index, start: start, end: end)
     }
     
     func backLastData(for chartType: ChartType, index: Int) -> KLineModel {
-        let type = getType(index: index, chartType: chartType)
+        let type = KlineTypeCommon.lineType(for: chartType, index: index)
         return backLastData(type: type, period: period, chartType: chartType, index: index)
     }
     
@@ -136,7 +140,7 @@ extension KlineViewDataSource {
         var minPrice: NSNumber = NSNumber(value: Double.greatestFiniteMagnitude)
         var index = 0
         while index < count {
-            let type = getType(index: index, chartType: chartType)
+            let type = KlineTypeCommon.lineType(for: chartType, index: index)
             let kLineModels = backArray(type: type, period: period, chartType: chartType, index: index, start: start, end: end)
             
             for kLineModel in kLineModels {
@@ -217,49 +221,6 @@ extension KlineViewDataSource {
         }
     }
     
-    /// index: ChartView - kLine's index
-    func getType(index: Int, chartType: ChartType) -> Int {
-        switch chartType {
-        case .main_ma:
-            return index == 0 ? 0 : 1
-        case .main_boll:
-            if index == 0 {
-                return 0
-            }
-            return index + 2
-        case .volume:
-            if index > 0 {
-                return 2
-            }
-            return 14
-        case .assistant_macd:
-            if index == 0 {
-                return 8
-            } else if index == 1 {
-                return 6
-            } else {
-                return 7
-            }
-        case .assistant_kdj:
-            if index == 2 {
-                return 11
-            }
-            if index == 1 {
-                return 10
-            } else {
-                return 9
-            }
-        case .assistant_rsi:
-            return 12
-        case .assistant_wr:
-            return 13
-        case .main:
-            return 0
-        default:
-            return 0
-        }
-    }
-    
     // TODO: number
     func tipModel(for data: KLineModel, chartType: ChartType, lineName: String) -> KLineTipModel {
         let tipModel = KLineTipModel()
@@ -314,10 +275,13 @@ extension KlineViewDataSource {
     
     /// 获取最新的指标数据
     func getLatestTips(by chartType: ChartType) -> [KLineTipModel] {
+        guard !periodData(period: period).isEmpty else {
+            return []
+        }
         let numberOfLines = numberOfAssistantLines(for: chartType)
         var tips = indexModel.getTipArray(chartType: chartType)
         for index in stride(from: 0, to: numberOfLines, by: 1) {
-            let type = getType(index: index, chartType: chartType)
+            let type = KlineTypeCommon.lineType(for: chartType, index: index)
             let data = backLastData(type: type, period: period, chartType: chartType, index: index)
             let lineName = indexModel.lineName(for: type, index: index)
             let tip = tipModel(for: data, chartType: chartType, lineName: lineName)
@@ -328,15 +292,18 @@ extension KlineViewDataSource {
     
     /// 长按显示的指标数据
     func getCurrentTips(by chartType: ChartType, arrayIndex: Int) -> [KLineTipModel] {
+        guard !periodData(period: period).isEmpty else {
+            return []
+        }
         let numberOfLines = numberOfAssistantLines(for: chartType)
         var tips = indexModel.getTipArray(chartType: chartType)
         for index in stride(from: 0, to: numberOfLines, by: 1) {
-            let type = getType(index: index, chartType: chartType)
+            let type = KlineTypeCommon.lineType(for: chartType, index: index)
             let data = backData(type: type, period: period, chartType: chartType, index: index, timeIndex: arrayIndex)
             let lineName = indexModel.lineName(for: type, index: index)
             if !lineName.isEmpty {
                 let tip = tipModel(for: data, chartType: chartType, lineName: lineName)
-                tip.color = color(chartType: chartType, index: index)
+                tip.color = KlineTypeCommon.lineColor(for: chartType, index: index)
                 tips.append(tip)
             }
         }
@@ -345,75 +312,32 @@ extension KlineViewDataSource {
     
     /// 最新的指标数据
     func getNewCurrentViewByType(_ chartType: ChartType) -> [KLineTipModel] {
+        guard !periodData(period: period).isEmpty else {
+            return []
+        }
         var tips = indexModel.getTipArray(chartType: chartType)
         let numberOfLines = numberOfAssistantLines(for: chartType)
         for index in 0..<numberOfLines {
-            let type = getType(index: index, chartType: chartType)
+            let type = KlineTypeCommon.lineType(for: chartType, index: index)
             let data = backLastData(type: type, period: period, chartType: chartType, index: index)
             let lineName = indexModel.lineName(for: type, index: index)
             if !lineName.isEmpty {
                 let tip = tipModel(for: data, chartType: chartType, lineName: lineName)
-                tip.color = color(chartType: chartType, index: index)
+                tip.color = KlineTypeCommon.lineColor(for: chartType, index: index)
                 tips.append(tip)
             }
         }
         return tips
     }
     
-    func color(chartType: ChartType, index: Int) -> UIColor {
-        switch chartType {
-        case .main_ma, .main_boll:
-            switch index {
-            case 1:
-                return ColorManager.shared.klineMA1Color
-            case 2:
-                return ColorManager.shared.klineMA2Color
-            case 3:
-                return ColorManager.shared.klineMA3Color
-            case 4:
-                return ColorManager.shared.klineMA4Color
-            case 5:
-                return ColorManager.shared.klineMA5Color
-            case 6:
-                return ColorManager.shared.klineMA6Color
-            default:
-                return ColorManager.shared.klineMA1Color
-            }
-        case .volume:
-            switch index {
-            case 0:
-                return ColorManager.shared.klineMA6Color
-            case 1:
-                return ColorManager.shared.klineMA1Color
-            case 2:
-                return ColorManager.shared.klineMA2Color
-            default:
-                return ColorManager.shared.klineMA1Color
-            }
-        case .assistant_kdj, .assistant_rsi, .assistant_wr:
-            switch index {
-            case 0:
-                return ColorManager.shared.klineMA1Color
-            case 1:
-                return ColorManager.shared.klineMA2Color
-            case 3:
-                return ColorManager.shared.klineMA3Color
-            default:
-                return ColorManager.shared.klineMA1Color
-            }
-        case .assistant_macd:
-            switch index {
-            case 0:
-                return ColorManager.shared.klineMA6Color
-            case 1:
-                return ColorManager.shared.klineMA1Color
-            case 2:
-                return ColorManager.shared.klineMA2Color
-            default:
-                return ColorManager.shared.klineMA1Color
-            }
-        default:
-            return ColorManager.shared.klineMA1Color
+    func releaseIndex(from startIndex: Int, datas: [KLineDataModel]) {
+        guard startIndex < datas.count else {
+            return
+        }
+        let endIndex = datas.count - 1
+        let array = datas[startIndex ... endIndex]
+        for k in array {
+            k.clearIndexData()
         }
     }
 }
@@ -426,7 +350,6 @@ extension KlineViewDataSource {
             
         }
         delegate?.updateKline(reset: resetHistory)
-        
     }
 }
 
@@ -495,22 +418,21 @@ extension KlineViewDataSource {
     // TODO: insert datas at index 0
     
     public func append(klines: [KLineDataModel], period: PeriodType, bSub: Bool, deleteHistory: Bool) {
-        let klines = klines.sorted(by: { $0.time < $1.time })
+        var originData = periodData(period: period)
+        if originData.isEmpty && bSub { // 防止更新的数据先到达，历史数据后到达造成线先展示一条k线
+            return
+        }
+        
         for kline in klines {
             kline.change = kline.close.subtracting(kline.open)
             kline.changeRate = kline.change.dividing(by: kline.open).multiplying(by: 100)
         }
         
-        var originData = periodData(period: period)
-        if originData.count == 0 && bSub { // 防止更新的数据先到达，历史数据后到达造成线先展示一条k线
-            return
-        }
-        if originData.count == 0 || deleteHistory {
+        if originData.isEmpty || deleteHistory {
             originDataPoolDic[period] = klines
             changeDic.removeAll()
         } else {
             if bSub {
-                
                 for kline in klines {
                     if let last = originData.last {
                         if last.time == kline.time {
@@ -526,8 +448,8 @@ extension KlineViewDataSource {
                 originDataPoolDic[period] = klines
             }
         }
-
-        //TODO: release index
+        
+        releaseIndex(from: max(0, originData.count - klines.count - 1), datas: originData)
         updataShowTrend(period: period, resetHistory: deleteHistory)
     }
     
@@ -590,26 +512,25 @@ extension KlineViewDataSource {
         }
     }
     
+    /// 异步操作，注意bug
     func asyncData(period: PeriodType) {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.015) {
             if var changeData = self.changeDic[period] {
                 let copyChangeData = changeData
+                let periodData = self.periodData(period: period)
                 for (_, value) in copyChangeData {
-                    var originData = self.periodData(period: period)
-                    for od in self.periodData(period: period) {
+                    for od in periodData {
                         if value.realData.time == od.time {
-                            self.changeTrendAnimation(from: od, to: value)
                             if value.lastNum == 0 {
-                                originData.removeLast()
-                                originData.append(value.realData)
                                 changeData.removeValue(forKey: value.realData.time)
+                            } else {
+                                self.changeTrendAnimation(from: od, to: value)
                             }
                         }
                     }
-                    self.originDataPoolDic[period] = originData
                 }
                 self.changeDic[period] = changeData
-                
+                self.releaseIndex(from: max(0, periodData.count - 1), datas: self.periodData(period: period))
                 self.updataShowTrend(period: period, resetHistory: false)
             }
         }

@@ -9,16 +9,19 @@
 import UIKit
 
 class ColumnarLine: KLine {
-//    @property(retain, nonatomic) CAShapeLayer *downLayer; // @synthesize downLayer=_downLayer;
-//    @property(retain, nonatomic) CAShapeLayer *upLayer;
-    
     let upLayer = CAShapeLayer()
     let downLayer = CAShapeLayer()
     
     override func setup() {
         super.setup()
-        upLayer.strokeColor = ColorManager.shared.kColorShadeButtonGreenEnd.cgColor
-        downLayer.strokeColor = ColorManager.shared.kColorShadeButtonRedEnd.cgColor
+        if lineType == .minuteColumnar {
+            upLayer.strokeColor = ColorManager.shared.klineMinuteVolumeColor.cgColor
+            downLayer.strokeColor = ColorManager.shared.klineMinuteVolumeColor.cgColor
+        } else {
+            upLayer.strokeColor = ColorManager.shared.kColorShadeButtonGreenEnd.cgColor
+            downLayer.strokeColor = ColorManager.shared.kColorShadeButtonRedEnd.cgColor
+        }
+        
         addSublayer(upLayer)
         addSublayer(downLayer)
     }
@@ -43,6 +46,9 @@ class ColumnarLine: KLine {
         if lineType == .separateColumnar {
             upLayer.lineWidth = 0.6
             downLayer.lineWidth = 0.6
+        } else if lineType == .minuteColumnar {
+            upLayer.lineWidth = 1.5
+            downLayer.lineWidth = 1.5
         } else {
             upLayer.lineWidth = lineWidth
             downLayer.lineWidth = lineWidth
@@ -57,27 +63,35 @@ class ColumnarLine: KLine {
     
     override func setNeedsDisplay() {
         super.setNeedsDisplay()
+        
         if let lineDatas = points as? [ColumnarData] {
+            
+            let upLine = UIBezierPath()
+            let downLine = UIBezierPath()
+
             let ups = lineDatas.filter({ $0.priceUp })
             let downs = lineDatas.filter({ !$0.priceUp })
             
             if !ups.isEmpty {
-                let upLine = UIBezierPath()
                 for point in ups {
-                    upLine.move(to: point.lowPoint)
-                    upLine.addLine(to: point.highPoint)
+                    if !point.isNullData {
+                        upLine.move(to: point.lowPoint)
+                        upLine.addLine(to: point.highPoint)
+                    }
                 }
-                upLayer.path = upLine.cgPath
             }
             
             if !downs.isEmpty {
-                let downLine = UIBezierPath()
                 for point in downs {
-                    downLine.move(to: point.lowPoint)
-                    downLine.addLine(to: point.highPoint)
+                    if !point.isNullData {
+                        downLine.move(to: point.lowPoint)
+                        downLine.addLine(to: point.highPoint)
+                    }
                 }
-                downLayer.path = downLine.cgPath
             }
+            
+            upLayer.path = upLine.cgPath
+            downLayer.path = downLine.cgPath
         }
     }
 }

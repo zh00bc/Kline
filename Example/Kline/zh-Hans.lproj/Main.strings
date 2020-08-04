@@ -1,0 +1,48 @@
+
+/* Class = "UISegmentedControl"; 2LF-FO-fXj.segmentTitles[0] = "1min"; ObjectID = "2LF-FO-fXj"; */
+"2LF-FO-fXj.segmentTitles[0]" = "1min";
+
+/* Class = "UISegmentedControl"; 2LF-FO-fXj.segmentTitles[1] = "4hour"; ObjectID = "2LF-FO-fXj"; */
+"2LF-FO-fXj.segmentTitles[1]" = "4hour";
+
+/* Class = "UISegmentedControl"; 2LF-FO-fXj.segmentTitles[2] = "timeline"; ObjectID = "2LF-FO-fXj"; */
+"2LF-FO-fXj.segmentTitles[2]" = "timeline";
+
+/* Class = "UISegmentedControl"; 2LF-FO-fXj.segmentTitles[3] = "1week"; ObjectID = "2LF-FO-fXj"; */
+"2LF-FO-fXj.segmentTitles[3]" = "1week";
+
+/* Class = "UISegmentedControl"; 2LF-FO-fXj.segmentTitles[4] = "1mon"; ObjectID = "2LF-FO-fXj"; */
+"2LF-FO-fXj.segmentTitles[4]" = "1mon";
+
+/* Class = "UISegmentedControl"; LnP-mN-eRr.segmentTitles[0] = "btcusdt"; ObjectID = "LnP-mN-eRr"; */
+"LnP-mN-eRr.segmentTitles[0]" = "btcusdt";
+
+/* Class = "UISegmentedControl"; LnP-mN-eRr.segmentTitles[1] = "ethusdt"; ObjectID = "LnP-mN-eRr"; */
+"LnP-mN-eRr.segmentTitles[1]" = "ethusdt";
+
+/* Class = "UIButton"; normalTitle = "Full"; ObjectID = "MVb-h2-alz"; */
+"MVb-h2-alz.normalTitle" = "Full";
+
+/* Class = "UISegmentedControl"; tr9-4Z-mdD.segmentTitles[0] = "MACD"; ObjectID = "tr9-4Z-mdD"; */
+"tr9-4Z-mdD.segmentTitles[0]" = "MACD";
+
+/* Class = "UISegmentedControl"; tr9-4Z-mdD.segmentTitles[1] = "KDJ"; ObjectID = "tr9-4Z-mdD"; */
+"tr9-4Z-mdD.segmentTitles[1]" = "KDJ";
+
+/* Class = "UISegmentedControl"; tr9-4Z-mdD.segmentTitles[2] = "RSI"; ObjectID = "tr9-4Z-mdD"; */
+"tr9-4Z-mdD.segmentTitles[2]" = "RSI";
+
+/* Class = "UISegmentedControl"; tr9-4Z-mdD.segmentTitles[3] = "WR"; ObjectID = "tr9-4Z-mdD"; */
+"tr9-4Z-mdD.segmentTitles[3]" = "WR";
+
+/* Class = "UISegmentedControl"; tr9-4Z-mdD.segmentTitles[4] = "Hide"; ObjectID = "tr9-4Z-mdD"; */
+"tr9-4Z-mdD.segmentTitles[4]" = "Hide";
+
+/* Class = "UISegmentedControl"; zdR-7E-hvG.segmentTitles[0] = "MA"; ObjectID = "zdR-7E-hvG"; */
+"zdR-7E-hvG.segmentTitles[0]" = "MA";
+
+/* Class = "UISegmentedControl"; zdR-7E-hvG.segmentTitles[1] = "BOLL"; ObjectID = "zdR-7E-hvG"; */
+"zdR-7E-hvG.segmentTitles[1]" = "BOLL";
+
+/* Class = "UISegmentedControl"; zdR-7E-hvG.segmentTitles[2] = "Hide"; ObjectID = "zdR-7E-hvG"; */
+"zdR-7E-hvG.segmentTitles[2]" = "Hide";

@@ -76,6 +76,45 @@ public class KLineDataModel {
     
     public init() { }
     
+    func clearIndexData() {
+        rsi1 = NSNumber(value: Double.greatestFiniteMagnitude)
+        rsi2 = NSNumber(value: Double.greatestFiniteMagnitude)
+        rsi3 = NSNumber(value: Double.greatestFiniteMagnitude)
+        
+        wr1 = NSNumber(value: Double.greatestFiniteMagnitude)
+        wr2 = NSNumber(value: Double.greatestFiniteMagnitude)
+        wr3 = NSNumber(value: Double.greatestFiniteMagnitude)
+        
+        volMa1 = NSNumber(value: Double.greatestFiniteMagnitude)
+        volMa2 = NSNumber(value: Double.greatestFiniteMagnitude)
+        
+        amountMa1 = NSNumber(value: Double.greatestFiniteMagnitude)
+        amountMa2 = NSNumber(value: Double.greatestFiniteMagnitude)
+        
+        priceMa1 = NSNumber(value: Double.greatestFiniteMagnitude)
+        priceMa2 = NSNumber(value: Double.greatestFiniteMagnitude)
+        priceMa3 = NSNumber(value: Double.greatestFiniteMagnitude)
+        priceMa4 = NSNumber(value: Double.greatestFiniteMagnitude)
+        priceMa5 = NSNumber(value: Double.greatestFiniteMagnitude)
+        priceMa6 = NSNumber(value: Double.greatestFiniteMagnitude)
+        
+        bollLb = NSNumber(value: Double.greatestFiniteMagnitude)
+        bollUb = NSNumber(value: Double.greatestFiniteMagnitude)
+        bollSummary = NSNumber(value: Double.greatestFiniteMagnitude)
+        
+        kdjJ = NSNumber(value: Double.greatestFiniteMagnitude)
+        kdjD = NSNumber(value: Double.greatestFiniteMagnitude)
+        kdjK = NSNumber(value: Double.greatestFiniteMagnitude)
+        
+        macdDea = NSNumber(value: Double.greatestFiniteMagnitude)
+        macdDif = NSNumber(value: Double.greatestFiniteMagnitude)
+        macdMacd = NSNumber(value: Double.greatestFiniteMagnitude)
+        
+        ema_small = NSNumber(value: Double.greatestFiniteMagnitude)
+        ema_big = NSNumber(value: Double.greatestFiniteMagnitude)
+        ema_middle = NSNumber(value: Double.greatestFiniteMagnitude)
+    }
+    
 
     
 //    func indicator(for type: Int, index: Int) -> NSNumber {

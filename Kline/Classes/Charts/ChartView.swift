@@ -102,6 +102,7 @@ extension ChartView {
             case is ColumnarLine:
                 kLine.updateLineWidth(dataSource.currentMaxWidth)
             case is AreaLine:
+                kLine.lineWidth = 1.5
                 candleLine = kLine
             default:
                 break
