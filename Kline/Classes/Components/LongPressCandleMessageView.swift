@@ -20,14 +20,15 @@ class LongPressCandleMessageView: UIView {
     var priceData: CandleLinePriceData? {
         didSet {
             if let d = priceData {
-                let time = ("kline-date".localized(), "\(KlineDateCommon.string(timestamp: d.time, period: period))", UIColor.white)
-                let open = ("kline-open".localized(), "\(KLineNumberFormatter.format(d.openPrice, precision: pricePrecision))", UIColor.white)
-                let high = ("kline-high".localized(), "\(KLineNumberFormatter.format(d.highPrice, precision: pricePrecision))", UIColor.white)
-                let low = ("kline-low".localized(), "\(KLineNumberFormatter.format(d.lowPrice, precision: pricePrecision))", UIColor.white)
-                let close = ("kline-close".localized(), "\(KLineNumberFormatter.format(d.closePrice, precision: pricePrecision))", UIColor.white)
+                let textColor = ColorManager.shared.klinePrimaryTextColor
+                let time = ("kline-date".localized(), "\(KlineDateCommon.string(timestamp: d.time, period: period))", textColor)
+                let open = ("kline-open".localized(), "\(KLineNumberFormatter.format(d.openPrice, precision: pricePrecision))", textColor)
+                let high = ("kline-high".localized(), "\(KLineNumberFormatter.format(d.highPrice, precision: pricePrecision))", textColor)
+                let low = ("kline-low".localized(), "\(KLineNumberFormatter.format(d.lowPrice, precision: pricePrecision))", textColor)
+                let close = ("kline-close".localized(), "\(KLineNumberFormatter.format(d.closePrice, precision: pricePrecision))", textColor)
                 let change = ("kline-change".localized(), "\(KLineNumberFormatter.format(d.change, precision: pricePrecision, numberStyle: .decimal, positivePrefix: true))", d.priceUp ? ColorManager.shared.kColorShadeButtonGreenEnd : ColorManager.shared.kColorShadeButtonRedEnd)
                 let changeRate = ("kline-change%".localized(), "\(KLineNumberFormatter.format(d.changeRate, precision: 2, positivePrefix: true))%", d.priceUp ? ColorManager.shared.kColorShadeButtonGreenEnd : ColorManager.shared.kColorShadeButtonRedEnd)
-                let executed = ("kline-volume".localized(), "\(KLineNumberFormatter.format(d.volume, precision: amountPrecision))", UIColor.white)
+                let executed = ("kline-volume".localized(), "\(KLineNumberFormatter.format(d.volume, precision: amountPrecision))", textColor)
                 dataSource = [time, open, high, low, close, change, changeRate, executed]
             } else {
                 dataSource = []

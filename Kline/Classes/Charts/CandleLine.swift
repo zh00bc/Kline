@@ -18,6 +18,8 @@ class CandleLine: KLine {
     let maxLabel = UILabel()
     let minLabel = UILabel()
     
+    let minHeight: CGFloat = 0.3
+    
     override func updateLineWidth(_ lineWidth: CGFloat) {
         super.updateLineWidth(lineWidth)
         
@@ -105,11 +107,19 @@ class CandleLine: KLine {
                 if candle.closePoint.y <= candle.openPoint.y {
                     upLinePath.move(to: candle.lowPoint)
                     upLinePath.addLine(to: candle.highPoint)
+                    let diff = candle.openPoint.y - candle.closePoint.y
+                    if diff < minHeight {
+                        candle.openPoint.y += minHeight - diff
+                    }
                     upRectPath.move(to: candle.openPoint)
                     upRectPath.addLine(to: candle.closePoint)
                 } else {
                     downLinePath.move(to: candle.lowPoint)
                     downLinePath.addLine(to: candle.highPoint)
+                    let diff = candle.closePoint.y - candle.openPoint.y
+                    if diff < minHeight {
+                        candle.closePoint.y += minHeight - diff
+                    }
                     downRectPath.move(to: candle.openPoint)
                     downRectPath.addLine(to: candle.closePoint)
                 }

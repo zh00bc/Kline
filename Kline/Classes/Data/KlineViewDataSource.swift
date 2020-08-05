@@ -21,8 +21,11 @@ open class KlineViewDataSource {
     private var changeDic: [PeriodType: [Int: KLineDataChangeModel]] = [:]
     
     public var indexModel = KlineIndexModel()
-    public var period: PeriodType = .min
+    public var period: PeriodType = .min15
     public var lineWidth: CGFloat = 7.0
+    
+    public var pricePrecision: Int = 2
+    public var amountPrecision: Int = 6
     
     public var mainChartType: ChartType = .main_ma
     public var assistantChartType: ChartType = .assistant_rsi
@@ -57,14 +60,6 @@ extension KlineViewDataSource {
     
     func getData(from index: Int) -> KLineModel {
         return backData(type: 0, period: period, chartType: mainChartType, index: index, timeIndex: index)
-    }
-    
-    var pricePrecision: Int {
-        return 2
-    }
-    
-    var amountPrecision: Int {
-        return 6
     }
     
     /// - Parameters:
