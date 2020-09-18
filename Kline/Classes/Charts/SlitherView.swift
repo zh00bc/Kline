@@ -480,6 +480,8 @@ extension SlitherView {
         
         let viewWidth: CGFloat = bounds.width
         
+        volumeNumberView.isHidden = volumeViewChartType == .assistant_hide
+        volumeChart.isHidden = volumeViewChartType == .assistant_hide
         assistantNumberView.isHidden = assistantViewChartType == .assistant_hide
         assistantChart.isHidden = assistantViewChartType == .assistant_hide
                 
@@ -487,28 +489,44 @@ extension SlitherView {
             if assistantViewChartType == .assistant_hide {
                 
             } else {
-                assistantNumberView.frame = CGRect(x: 0.0, y: bounds.height - Constants.assistantViewHeight, width: bounds.width, height: Constants.assistantViewHeight)
+                if volumeViewChartType == .assistant_hide {
+                    assistantNumberView.frame = CGRect(x: 0.0, y: bounds.height - Constants.assistantViewHeight, width: bounds.width, height: Constants.assistantViewHeight)
+                } else {
+                    assistantNumberView.frame = CGRect(x: 0.0, y: bounds.height - Constants.assistantViewHeight, width: bounds.width, height: Constants.assistantViewHeight)
+                }
                 timeShowView.frame = CGRect(x: 0.0, y: assistantNumberView.frame.maxY, width: viewWidth, height: Constants.timeViewHeight)
             }
         } else {
             timeShowView.frame = CGRect(x: 0.0, y: bounds.height - Constants.timeViewHeight, width: viewWidth, height: Constants.timeViewHeight)
-            if assistantViewChartType == .assistant_hide {
-                volumeNumberView.frame = CGRect(x: 0.0, y: bounds.height - Constants.timeViewHeight - Constants.assistantViewHeight, width: viewWidth, height: Constants.assistantViewHeight)
-                
+            
+            if assistantViewChartType == .assistant_hide && volumeViewChartType == .assistant_hide {
+                mainNumberView.frame = CGRect(x: 0.0, y: 0.0, width: viewWidth, height: timeShowView.frame.minY)
             } else {
-                assistantNumberView.frame = CGRect(x: 0.0, y: bounds.height - Constants.timeViewHeight - Constants.assistantViewHeight, width: viewWidth, height: Constants.assistantViewHeight)
-                assistantChart.frame = CGRect(x: 0.0, y: assistantNumberView.frame.minY + Constants.messageViewHeight, width: viewWidth, height: Constants.assistantViewHeight - Constants.messageViewHeight)
-                volumeNumberView.frame = CGRect(x: 0.0, y: assistantNumberView.frame.minY - Constants.assistantViewHeight, width: viewWidth, height: Constants.assistantViewHeight)
+                if assistantViewChartType == .assistant_hide && volumeViewChartType != .assistant_hide {
+                    volumeNumberView.frame = CGRect(x: 0.0, y: bounds.height - Constants.timeViewHeight - Constants.assistantViewHeight, width: viewWidth, height: Constants.assistantViewHeight)
+                    mainNumberView.frame = CGRect(x: 0.0, y: 0.0, width: viewWidth, height: volumeNumberView.frame.minY)
+                } else if assistantViewChartType != .assistant_hide && volumeViewChartType == .assistant_hide {
+                    assistantNumberView.frame = CGRect(x: 0.0, y: bounds.height - Constants.timeViewHeight - Constants.assistantViewHeight, width: viewWidth, height: Constants.assistantViewHeight)
+                    mainNumberView.frame = CGRect(x: 0.0, y: 0.0, width: viewWidth, height: assistantNumberView.frame.minY)
+                } else {
+                    assistantNumberView.frame = CGRect(x: 0.0, y: bounds.height - Constants.timeViewHeight - Constants.assistantViewHeight, width: viewWidth, height: Constants.assistantViewHeight)
+                    volumeNumberView.frame = CGRect(x: 0.0, y: assistantNumberView.frame.minY - Constants.assistantViewHeight, width: viewWidth, height: Constants.assistantViewHeight)
+                    mainNumberView.frame = CGRect(x: 0.0, y: 0.0, width: viewWidth, height: volumeNumberView.frame.minY)
+                }
             }
-            mainNumberView.frame = CGRect(x: 0.0, y: 0.0, width: viewWidth, height: volumeNumberView.frame.minY)
         }
         
         latestPriceView.frame = mainNumberView.frame
         mainChart.frame = CGRect(x: 0.0, y: mainNumberView.frame.minY + Constants.mainChartTopOffset, width: viewWidth, height: mainNumberView.frame.height - Constants.mainChartTopOffset)
         volumeChart.frame = CGRect(x: 0.0, y: volumeNumberView.frame.minY + Constants.messageViewHeight, width: viewWidth, height: Constants.assistantViewHeight - Constants.messageViewHeight)
+        assistantChart.frame = CGRect(x: 0.0, y: assistantNumberView.frame.minY + Constants.messageViewHeight, width: viewWidth, height: Constants.assistantViewHeight - Constants.messageViewHeight)
         
         mainChart.reloadSubViews()
-        volumeChart.reloadSubViews()
+        
+        if !volumeChart.isHidden {
+            volumeChart.reloadSubViews()
+        }
+        
         if !assistantChart.isHidden {
             assistantChart.reloadSubViews()
         }

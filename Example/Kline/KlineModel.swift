@@ -26,6 +26,4 @@ struct KlineTick: Mappable {
         amount <- (map["amount"], NSDecimalNumberTransform())
         time <- map["id"]
     }
-    
-    
 }
