@@ -51,13 +51,16 @@ class SlitherNumberView: UIView {
         return (bounds.height - Constants.mainChartTopOffset) / CGFloat( yLineNumber - 1)
     }
     
+    var style: ChartStyle?
+    
     deinit {
         debugPrint("SlitherNumberView deinit")
     }
     
-    init(type: NumberViewType) {
+    init(type: NumberViewType, style: ChartStyle? = nil) {
         self.type = type
         self.xLineNumber = 4
+        self.style = style
         
         switch type {
         case .main:
@@ -199,7 +202,7 @@ class SlitherNumberView: UIView {
         while index <= xLineNumber {
             let verLine = UIView()
             verLine.tag = 42
-            verLine.backgroundColor = ColorManager.shared.slitherNumberLineColor
+            verLine.backgroundColor = style?.numberViewLineColor ?? ColorManager.shared.slitherNumberLineColor
             addSubview(verLine)
             lines.append(verLine)
             verLine.snp.makeConstraints {
@@ -231,20 +234,20 @@ class SlitherNumberView: UIView {
     func addLine(frame: CGRect) {
         let lineView = UIView(frame: frame)
         lineView.tag = 42
-        lineView.backgroundColor = ColorManager.shared.slitherNumberLineColor
+        lineView.backgroundColor = style?.numberViewLineColor ?? ColorManager.shared.slitherNumberLineColor
         addSubview(lineView)
     }
     
     func setupGradient() {
         switch type {
         case .main:
-            gradientLayer.colors = [ColorManager.shared.klineMainBackgroundGradientColor1,
+            gradientLayer.colors = style?.mainChartGradientColors ?? [ColorManager.shared.klineMainBackgroundGradientColor1,
                                     ColorManager.shared.klineMainBackgroundGradientColor2]
         case .volume:
-            gradientLayer.colors = [ColorManager.shared.klineVolumeBackgroundGradientColor1,
+            gradientLayer.colors = style?.volumeChartGradientColors ?? [ColorManager.shared.klineVolumeBackgroundGradientColor1,
                                     ColorManager.shared.klineVolumeBackgroundGradientColor2]
         case .assistant:
-            gradientLayer.colors = [ColorManager.shared.klineVolumeBackgroundGradientColor1,
+            gradientLayer.colors = style?.assistantChartGradientColors ?? [ColorManager.shared.klineVolumeBackgroundGradientColor1,
                                     ColorManager.shared.klineVolumeBackgroundGradientColor2]
         }
         

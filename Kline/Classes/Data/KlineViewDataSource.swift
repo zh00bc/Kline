@@ -29,7 +29,7 @@ open class KlineViewDataSource {
     
     public var mainChartType: ChartType = .main_ma
     public var assistantChartType: ChartType = .assistant_hide
-    public var volumeChartType: ChartType = .assistant_hide
+    public var volumeChartType: ChartType = .volume
     
     private var queryMoreDate: Int = 0
     private var historyCurrentDate: Int = 0

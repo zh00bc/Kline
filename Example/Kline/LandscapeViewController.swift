@@ -74,7 +74,9 @@ class LandscapeViewController: UIViewController {
         let top = UIApplication.shared.keyWindow?.safeAreaInsets
         let height = UIScreen.main.bounds.width - 40 - 30
         let width = UIScreen.main.bounds.height - 34 - 44
-        slitherView = SlitherView(frame: CGRect(x: 89, y: 49, width: width, height: height))
+        let chartStyle = ChartStyle()
+        chartStyle.mainChartGradientColors = [UIColor.clear.cgColor, UIColor.clear.cgColor]
+        slitherView = SlitherView(frame: CGRect(x: 89, y: 49, width: width, height: height), style: chartStyle)
         view.addSubview(slitherView)
         
         dataSource.delegate = self

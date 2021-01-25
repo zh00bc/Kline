@@ -7,7 +7,7 @@ target 'Kline_Example' do
   pod 'SnapKit'
   pod 'Starscream'
   pod 'ObjectMapper'
-  pod 'Reveal-SDK'
+#  pod 'Reveal-SDK'
   pod 'GzipSwift'
   pod 'RxSwift'
   pod 'RxCocoa'

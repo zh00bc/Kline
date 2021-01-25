@@ -44,6 +44,14 @@ open class SlitherView: UIView {
         return dataSource?.assistantChartType ?? .assistant_wr
     }
     
+    public var latestPriceTextAttributes: [NSAttributedString.Key: Any] = [.font: CustomFonts.DIN.medium.font(ofSize: 9),
+                                                                           .backgroundColor: ColorManager.shared.kColorContentBackground.withAlphaComponent(0.9),
+                                                                           .foregroundColor: ColorManager.shared.klineIndexSettingTextColor] {
+        didSet {
+            latestPriceView.textAttributes = latestPriceTextAttributes
+        }
+    }
+    
     // MARK: - Data
     
     public weak var dataSource: KlineViewDataSource?
@@ -67,6 +75,8 @@ open class SlitherView: UIView {
     /// 记录上次显示起始位置的timestamp
     var startDate: Int?
     
+    var style: ChartStyle?
+    
     deinit {
         print("SlitherView deinit")
     }
@@ -78,6 +88,12 @@ open class SlitherView: UIView {
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        setup()
+    }
+    
+    public init(frame: CGRect, style: ChartStyle? = nil) {
+        super.init(frame: frame)
+        self.style = style
         setup()
     }
     
@@ -405,9 +421,9 @@ extension SlitherView {
     func setupView() {
         isOpaque = true
         
-        mainNumberView = SlitherNumberView(type: .main)
-        volumeNumberView = SlitherNumberView(type: .volume)
-        assistantNumberView = SlitherNumberView(type: .assistant)
+        mainNumberView = SlitherNumberView(type: .main, style: style)
+        volumeNumberView = SlitherNumberView(type: .volume, style: style)
+        assistantNumberView = SlitherNumberView(type: .assistant, style: style)
         addSubview(mainNumberView)
         addSubview(volumeNumberView)
         addSubview(assistantNumberView)

@@ -32,10 +32,16 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         Localize.setCurrentLanguage("ko")
-        
-        slitherView = SlitherView(frame: CGRect(x: 0, y: 300, width: UIScreen.main.bounds.width, height: 520))
+        let chartStyle = ChartStyle()
+        chartStyle.mainChartGradientColors = [UIColor.clear.cgColor, UIColor.clear.cgColor]
+        slitherView = SlitherView(frame: CGRect(x: 0, y: 300, width: UIScreen.main.bounds.width, height: 520), style: chartStyle)
         slitherView.delegate = self
         view.addSubview(slitherView)
+        
+//        let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 12),
+//                                                    .backgroundColor: UIColor.white,
+//                                                    .foregroundColor: UIColor.red]
+//        slitherView.latestPriceTextAttributes = attrs
         
         activity.hidesWhenStopped = true
         view.addSubview(activity)

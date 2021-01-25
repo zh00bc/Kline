@@ -76,9 +76,23 @@ class KLineLatestPriceView: UIView {
         return baseLayer
     }()
     
-    lazy var attributes: [NSAttributedString.Key: Any] = {
-        return [NSAttributedString.Key.font: CustomFonts.DIN.medium.font(ofSize: 9)]
-    }()
+    // 文字属性
+    var textAttributes: [NSAttributedString.Key: Any] = [.font: CustomFonts.DIN.medium.font(ofSize: 9),
+                                                         .backgroundColor: ColorManager.shared.kColorContentBackground.withAlphaComponent(0.9),
+                                                         .foregroundColor: ColorManager.shared.klineIndexSettingTextColor] {
+        didSet {
+            if let font = textAttributes[.font] as? UIFont {
+                textLayer.font = font
+                textLayer.fontSize = font.pointSize
+            }
+            if let foregroundColor = textAttributes[.foregroundColor] as? UIColor {
+                textLayer.foregroundColor = foregroundColor.cgColor
+            }
+            if let backgroundColor = textAttributes[.backgroundColor] as? UIColor {
+                textLayer.backgroundColor = backgroundColor.cgColor
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -108,7 +122,7 @@ class KLineLatestPriceView: UIView {
         
         let textSize = (price as NSString).boundingRect(with: CGSize(width: 200, height: 20),
                                                         options: .usesFontLeading,
-                                                        attributes: attributes,
+                                                        attributes: textAttributes,
                                                         context: nil)
         let textWidth = ceil(textSize.width)
         let textHeight = ceil(textSize.height)
