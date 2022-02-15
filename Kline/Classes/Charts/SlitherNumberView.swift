@@ -87,8 +87,8 @@ class SlitherNumberView: UIView {
         addSubview(messageView)
         for _ in stride(from: 0, to: 5, by: 1) {
             let textLabel = BaseLabel()
-            textLabel.font = UIFont.systemFont(ofSize: 10)
-            textLabel.font = CustomFonts.DIN.medium.font(ofSize: 10)
+            textLabel.font = UIFont.systemFont(ofSize: 9)
+//            textLabel.font = CustomFonts.DIN.medium.font(ofSize: 10)
             textLabel.textColor = ColorManager.shared.klineCnyRateColor
             addSubview(textLabel)
             numbers.append(textLabel)

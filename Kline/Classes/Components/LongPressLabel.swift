@@ -17,8 +17,8 @@ class LongPressLabel: UILabel {
     override init(frame: CGRect) {
         
         showLabel = UILabel()
-        showLabel.textColor = ColorManager.shared.klineCrossCursorPriceTextColor
-        showLabel.font = CustomFonts.DIN.medium.font(ofSize: 9)
+        showLabel.textColor = ColorManager.shared.klinePrimaryTextColor
+        showLabel.font = UIFont.systemFont(ofSize: 9)
         
         super.init(frame: frame)
         
@@ -34,8 +34,8 @@ class LongPressLabel: UILabel {
         let context = UIGraphicsGetCurrentContext()!
         context.clear(rect)
         context.setLineWidth(1.0)
-        context.setStrokeColor(ColorManager.shared.klineCrossCursorPriceBorderColor.cgColor)
-        context.setFillColor(ColorManager.shared.klineIndexBackgroundGradientColorStart.withAlphaComponent(0.9).cgColor)
+        context.setStrokeColor(ColorManager.shared.klinePrimaryTextColor.cgColor)
+        context.setFillColor(UIColor.white.cgColor)
         
         let radius: CGFloat = 4
         if bInLeft {

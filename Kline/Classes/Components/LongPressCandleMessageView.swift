@@ -52,7 +52,7 @@ class LongPressCandleMessageView: UIView {
         layer.borderWidth = 1.0
         layer.masksToBounds = true
         layer.borderColor = ColorManager.shared.kColorSecondaryText.cgColor
-        backgroundColor = ColorManager.shared.klineIndexBackgroundGradientColorStart
+        backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.95)//ColorManager.shared.klineIndexBackgroundGradientColorStart
         
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.isUserInteractionEnabled = false

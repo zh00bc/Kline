@@ -48,8 +48,8 @@ class CandleLine: KLine {
         
         maxLabel.textColor = ColorManager.shared.klineMinMaxValueColor
         minLabel.textColor = ColorManager.shared.klineMinMaxValueColor
-        maxLabel.font = CustomFonts.DIN.medium.font(ofSize: 11)
-        minLabel.font = CustomFonts.DIN.medium.font(ofSize: 11)
+        maxLabel.font = UIFont.systemFont(ofSize: 9)//CustomFonts.DIN.medium.font(ofSize: 11)
+        minLabel.font = UIFont.systemFont(ofSize: 9)//CustomFonts.DIN.medium.font(ofSize: 11)
         
         addSublayer(upLineLayer)
         addSublayer(upRectLayer)

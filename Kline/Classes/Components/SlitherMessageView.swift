@@ -41,7 +41,7 @@ class SlitherMessageView: UIView {
             textLayer.string = message.lineTip
             textLayer.foregroundColor = message.color.cgColor
             
-            let width = ceil(message.lineTip.width(using: CustomFonts.DIN.medium.font(ofSize: 9)))
+            let width = ceil(message.lineTip.width(using: UIFont.systemFont(ofSize: 9)))
                         
             if index > 0 {
                 textLayer.frame = CGRect(x: textLayers[index - 1].frame.maxX + 14.5, y: 0, width: width, height: 12.0)
@@ -56,7 +56,7 @@ class SlitherMessageView: UIView {
     func setup() {
         for _ in 1...6 {
             let textLayer = CATextLayer()
-            textLayer.font = CustomFonts.DIN.medium.font(ofSize: 9)
+            textLayer.font = UIFont.systemFont(ofSize: 9)
             textLayer.fontSize = 9
             textLayer.alignmentMode = .justified
             textLayer.contentsScale = UIScreen.main.scale

@@ -44,7 +44,7 @@ open class SlitherView: UIView {
         return dataSource?.assistantChartType ?? .assistant_wr
     }
     
-    public var latestPriceTextAttributes: [NSAttributedString.Key: Any] = [.font: CustomFonts.DIN.medium.font(ofSize: 9),
+    public var latestPriceTextAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 9),
                                                                            .backgroundColor: ColorManager.shared.kColorContentBackground.withAlphaComponent(0.9),
                                                                            .foregroundColor: ColorManager.shared.klineIndexSettingTextColor] {
         didSet {
@@ -453,10 +453,10 @@ extension SlitherView {
         timeShowView = TimeShowView()
         latestPriceView = KLineLatestPriceView()
         gotoLatestButton = UIButton(type: .custom)
-        gotoLatestButton.setTitleColor(ColorManager.shared.kColorSecondaryText, for: .normal)
-        gotoLatestButton.titleLabel?.font = CustomFonts.DIN.medium.font(ofSize: 9)
-        gotoLatestButton.backgroundColor = ColorManager.shared.klineIndexBackgroundGradientColorStart
-        gotoLatestButton.layer.borderColor = ColorManager.shared.klineLatestPriceLabelBorderColor.cgColor
+        gotoLatestButton.setTitleColor(ColorManager.shared.klinePrimaryTextColor, for: .normal)
+        gotoLatestButton.titleLabel?.font = UIFont.systemFont(ofSize: 9)//CustomFonts.DIN.medium.font(ofSize: 9)
+        gotoLatestButton.backgroundColor = UIColor.white //ColorManager.shared.klineIndexBackgroundGradientColorStart
+        gotoLatestButton.layer.borderColor = ColorManager.shared.klinePrimaryTextColor.cgColor
         gotoLatestButton.layer.borderWidth = 1.0
         gotoLatestButton.layer.cornerRadius = 10.0
         gotoLatestButton.setImage(UIImage(named: "kline_price_icon"), for: .normal)

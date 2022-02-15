@@ -24,8 +24,8 @@ class LongPressCandleMessageCell: UITableViewCell {
     
     func setup() {
         backgroundColor = .clear
-        nameLabel.font = CustomFonts.DIN.medium.font(ofSize: 10)
-        valueLabel.font = CustomFonts.DIN.medium.font(ofSize: 10)
+        nameLabel.font = UIFont.systemFont(ofSize: 10)
+        valueLabel.font = UIFont.systemFont(ofSize: 10)
         nameLabel.textColor = ColorManager.shared.klinePrimaryTextColor
         valueLabel.textColor = ColorManager.shared.klinePrimaryTextColor
         contentView.addSubview(nameLabel)

@@ -37,7 +37,7 @@ class LongPressShowView: UIView {
     
     lazy var hLine: UIView = {
         let horLine = UIView()
-        horLine.backgroundColor = ColorManager.shared.klineCrossCursorPriceBorderColor
+        horLine.backgroundColor = ColorManager.shared.klinePrimaryTextColor
         return horLine
     }()
     
@@ -69,10 +69,10 @@ class LongPressShowView: UIView {
     
     lazy var timerLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: Constants.timeViewHeight))
-        label.font = CustomFonts.DIN.medium.font(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 10)
         label.textColor = ColorManager.shared.klinePrimaryTextColor
 //        label.textAlignment = .center
-        label.layer.borderColor = ColorManager.shared.kColorSecondaryText.cgColor
+        label.layer.borderColor = UIColor.clear.cgColor//ColorManager.shared.kColorSecondaryText.cgColor
         label.layer.borderWidth = 1.0
         label.layer.cornerRadius = 3.0
         label.layer.masksToBounds = true

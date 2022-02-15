@@ -14,9 +14,9 @@ class KLineLatestPriceView: UIView {
         var layer = CATextLayer()
         layer.contentsScale = UIScreen.main.scale
         layer.fontSize = 9.0
-        layer.font = CustomFonts.DIN.medium.font(ofSize: 9)
-        layer.foregroundColor = ColorManager.shared.klineIndexSettingTextColor.cgColor
-        layer.backgroundColor = ColorManager.shared.kColorContentBackground.withAlphaComponent(0.9).cgColor
+        layer.font = UIFont.systemFont(ofSize: 9)//CustomFonts.DIN.medium.font(ofSize: 9)
+        layer.foregroundColor = UIColor(hex: "#564CE0").cgColor
+        layer.backgroundColor = UIColor.white.cgColor//ColorManager.shared.kColorContentBackground.withAlphaComponent(0.9).cgColor
         return layer
     }()
     
@@ -24,7 +24,7 @@ class KLineLatestPriceView: UIView {
         var imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = dashLine(color: ColorManager.shared.klineCnyRateColor)
+        imageView.image = dashLine(color: UIColor(hex: "#564CE0"))
         return imageView
     }()
     
@@ -32,7 +32,7 @@ class KLineLatestPriceView: UIView {
         var imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = dashLine(color: ColorManager.shared.klineMinuteLineColor)
+        imageView.image = dashLine(color: UIColor(hex: "#564CE0"))
         return imageView
     }()
     
@@ -77,7 +77,7 @@ class KLineLatestPriceView: UIView {
     }()
     
     // 文字属性
-    var textAttributes: [NSAttributedString.Key: Any] = [.font: CustomFonts.DIN.medium.font(ofSize: 9),
+    var textAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 9),
                                                          .backgroundColor: ColorManager.shared.kColorContentBackground.withAlphaComponent(0.9),
                                                          .foregroundColor: ColorManager.shared.klineIndexSettingTextColor] {
         didSet {
@@ -86,10 +86,10 @@ class KLineLatestPriceView: UIView {
                 textLayer.fontSize = font.pointSize
             }
             if let foregroundColor = textAttributes[.foregroundColor] as? UIColor {
-                textLayer.foregroundColor = foregroundColor.cgColor
+                textLayer.foregroundColor = UIColor(hex: "#564CE0").cgColor
             }
             if let backgroundColor = textAttributes[.backgroundColor] as? UIColor {
-                textLayer.backgroundColor = backgroundColor.cgColor
+                textLayer.backgroundColor = UIColor.white.cgColor//backgroundColor.cgColor
             }
         }
     }

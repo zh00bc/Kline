@@ -40,7 +40,7 @@ class TimeShowView: UIView {
         
         for index in 0...5 {
             let timeLabel = BaseLabel()
-            timeLabel.font = CustomFonts.DIN.medium.font(ofSize: 10)
+            timeLabel.font = UIFont.systemFont(ofSize: 10)
             timeLabel.textColor = ColorManager.shared.kColorSecondaryText
             timeLabel.textAlignment = .center
             timeLabels.append(timeLabel)
