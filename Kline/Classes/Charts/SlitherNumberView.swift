@@ -205,11 +205,8 @@ class SlitherNumberView: UIView {
             verLine.backgroundColor = style?.numberViewLineColor ?? ColorManager.shared.slitherNumberLineColor
             addSubview(verLine)
             lines.append(verLine)
-            verLine.snp.makeConstraints {
-                $0.centerX.equalTo(self.snp.left).offset(xSpacing * CGFloat(index))
-                $0.width.equalTo(lineHeight)
-                $0.top.bottom.equalTo(self)
-            }
+            
+            verLine.frame = CGRect(x: xSpacing * CGFloat(index) - lineHeight * 0.5, y: 0, width: lineHeight, height: bounds.height)
             index += 1
         }
         
