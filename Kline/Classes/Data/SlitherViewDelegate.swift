@@ -6,7 +6,7 @@
 //  Copyright © 2019 zhangj. All rights reserved.
 //
 
-public protocol SlitherViewDelegate: class {
+public protocol SlitherViewDelegate: AnyObject {
     func slitherViewWillBeginDragging(_ slitherView: SlitherView)
     func slitherView(_ slitherView: SlitherView, didSelectAt index: Int)
     func hideAllPopup()

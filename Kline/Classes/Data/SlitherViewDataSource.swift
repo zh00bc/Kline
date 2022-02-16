@@ -23,7 +23,7 @@ import UIKit
 //    var index: KlineIndexModel { get }
 //}
 
-protocol SlitherViewDataSource: class {
+protocol SlitherViewDataSource: AnyObject {
     
     var pointCount: Int { get }
     

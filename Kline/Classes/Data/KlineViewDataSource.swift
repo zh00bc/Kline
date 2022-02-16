@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public protocol KlineViewDataSourceDelegate: class {
+public protocol KlineViewDataSourceDelegate: AnyObject {
     func refresh()
     func updateKline(reset: Bool)
 }

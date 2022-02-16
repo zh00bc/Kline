@@ -11,7 +11,7 @@ import Starscream
 import Gzip
 import RxSwift
 
-public protocol HuobiSocketDelegate: class {
+public protocol HuobiSocketDelegate: AnyObject {
     func huobiSocketDidConnected(_ huobiSocket: HuobiSocket)
     func huobiSocket(_ huobiSocket: HuobiSocket, didDisConnectError error: Error?)
     func huobiSocket(_ huobiSocket: HuobiSocket, didReceiveData data: Data)

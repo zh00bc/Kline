@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MarketDataManagerDelegate: class {
+protocol MarketDataManagerDelegate: AnyObject {
     func update(kline: PeriodType, resetHistory: Bool)
 }
 

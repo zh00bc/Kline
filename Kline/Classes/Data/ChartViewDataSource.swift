@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ChartViewDataSource: class {
+protocol ChartViewDataSource: AnyObject {
     var currentMaxWidth: CGFloat { get }
     var period: PeriodType { get }
     
