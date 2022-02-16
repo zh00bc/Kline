@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0cL-lg-huL">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="Kline_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2LF-FO-fXj">
+                                <rect key="frame" x="16" y="94" width="343" height="32"/>
+                                <segments>
+                                    <segment title="1min"/>
+                                    <segment title="4hour"/>
+                                    <segment title="timeline"/>
+                                    <segment title="1week"/>
+                                    <segment title="1mon"/>
+                                </segments>
+                            </segmentedControl>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zdR-7E-hvG">
+                                <rect key="frame" x="16" y="133" width="343" height="32"/>
+                                <segments>
+                                    <segment title="MA"/>
+                                    <segment title="BOLL"/>
+                                    <segment title="Hide"/>
+                                </segments>
+                            </segmentedControl>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="tr9-4Z-mdD">
+                                <rect key="frame" x="16" y="171" width="343" height="32"/>
+                                <segments>
+                                    <segment title="MACD"/>
+                                    <segment title="KDJ"/>
+                                    <segment title="RSI"/>
+                                    <segment title="WR"/>
+                                    <segment title="Hide"/>
+                                </segments>
+                            </segmentedControl>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="LnP-mN-eRr">
+                                <rect key="frame" x="16" y="55" width="343" height="32"/>
+                                <segments>
+                                    <segment title="btcusdt"/>
+                                    <segment title="ethusdt"/>
+                                </segments>
+                            </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MVb-h2-alz">
+                                <rect key="frame" x="16" y="210" width="30" height="30"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Full"/>
+                                <connections>
+                                    <action selector="landScape:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Vrt-Ch-9KX"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="MVb-h2-alz" firstAttribute="top" secondItem="tr9-4Z-mdD" secondAttribute="bottom" constant="8" id="2fI-Di-sdq"/>
+                            <constraint firstItem="tr9-4Z-mdD" firstAttribute="top" secondItem="zdR-7E-hvG" secondAttribute="bottom" constant="7" id="6Zm-F0-JqI"/>
+                            <constraint firstItem="tr9-4Z-mdD" firstAttribute="leading" secondItem="zdR-7E-hvG" secondAttribute="leading" id="9na-ee-Sbn"/>
+                            <constraint firstItem="LnP-mN-eRr" firstAttribute="trailing" secondItem="2LF-FO-fXj" secondAttribute="trailing" id="IoG-HB-qKS"/>
+                            <constraint firstAttribute="trailing" secondItem="2LF-FO-fXj" secondAttribute="trailing" constant="16" id="Ohr-yV-Mt3"/>
+                            <constraint firstItem="zdR-7E-hvG" firstAttribute="leading" secondItem="2LF-FO-fXj" secondAttribute="leading" id="P2x-ib-bve"/>
+                            <constraint firstItem="2LF-FO-fXj" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="16" id="PfJ-K2-0Uz"/>
+                            <constraint firstItem="2LF-FO-fXj" firstAttribute="top" secondItem="LnP-mN-eRr" secondAttribute="bottom" constant="8" id="Xn9-JU-5b3"/>
+                            <constraint firstItem="zdR-7E-hvG" firstAttribute="trailing" secondItem="2LF-FO-fXj" secondAttribute="trailing" id="YdQ-Sc-clI"/>
+                            <constraint firstItem="LnP-mN-eRr" firstAttribute="leading" secondItem="2LF-FO-fXj" secondAttribute="leading" id="a1m-wF-gqq"/>
+                            <constraint firstItem="MVb-h2-alz" firstAttribute="leading" secondItem="tr9-4Z-mdD" secondAttribute="leading" id="g6m-z6-c7q"/>
+                            <constraint firstItem="tr9-4Z-mdD" firstAttribute="trailing" secondItem="zdR-7E-hvG" secondAttribute="trailing" id="m5o-xL-tCQ"/>
+                            <constraint firstItem="zdR-7E-hvG" firstAttribute="top" secondItem="2LF-FO-fXj" secondAttribute="bottom" constant="8" id="mcA-7P-nIO"/>
+                            <constraint firstItem="LnP-mN-eRr" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="11" id="zdz-pJ-6Ee"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="E7O-uj-TOo"/>
+                    <connections>
+                        <outlet property="assistantChartSegment" destination="tr9-4Z-mdD" id="2NG-hk-Ava"/>
+                        <outlet property="mainChartSegment" destination="zdR-7E-hvG" id="mdB-fd-XYI"/>
+                        <outlet property="periodSegment" destination="2LF-FO-fXj" id="rXe-2q-LFc"/>
+                        <outlet property="symbolSegment" destination="LnP-mN-eRr" id="GqI-mC-akP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="487.19999999999999" y="-120.98950524737631"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="vYP-Xb-faV">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0cL-lg-huL" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="q58-DD-Pkl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="Fd1-Kp-k1G"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bvz-11-azb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-452" y="-120.98950524737631"/>
+        </scene>
+    </scenes>
+</document>

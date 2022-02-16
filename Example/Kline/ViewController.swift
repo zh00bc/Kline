@@ -10,7 +10,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 import Kline
-import Localize_Swift
 
 class ViewController: UIViewController {
     @IBOutlet weak var periodSegment: UISegmentedControl!
@@ -31,7 +30,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Localize.setCurrentLanguage("ko")
         let chartStyle = ChartStyle()
         chartStyle.mainChartGradientColors = [UIColor.clear.cgColor, UIColor.clear.cgColor]
         slitherView = SlitherView(frame: CGRect(x: 0, y: 300, width: UIScreen.main.bounds.width, height: 520), style: chartStyle)

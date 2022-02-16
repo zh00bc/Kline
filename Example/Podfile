@@ -1,4 +1,4 @@
-platform :ios, "12.0"
+platform :ios, "13.0"
 use_frameworks!
 
 target 'Kline_Example' do
@@ -11,5 +11,4 @@ target 'Kline_Example' do
   pod 'GzipSwift'
   pod 'RxSwift'
   pod 'RxCocoa'
-  pod 'Localize-Swift'
 end

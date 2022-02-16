@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  Kline
+
+  Created by ios on 2022/2/16.
+  Copyright © 2022 CocoaPods. All rights reserved.
+*/
+
+"kline.date" = "Date";
+"kline.open" = "Open";
+"kline.high" = "High";
+"kline.low" = "Low";
+"kline.close" = "Close";
+"kline.change" = "Change";
+"kline.change%" = "Change%";
+"kline.volume" = "Vol";
