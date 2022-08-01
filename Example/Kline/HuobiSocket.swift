@@ -19,7 +19,7 @@ public protocol HuobiSocketDelegate: AnyObject {
 
 open class HuobiSocket: NSObject {
     
-    fileprivate let HOST_URLSTRING = "wss://api.hadax.com/ws"
+    fileprivate let HOST_URLSTRING = "wss://api.huobi.pro/ws"
     
     fileprivate var webSocket: WebSocket?
     
