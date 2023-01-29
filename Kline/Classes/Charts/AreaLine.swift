@@ -20,10 +20,12 @@ class AreaLine: KLine {
 
         addSublayer(gradientLayer)
         gradientLayer.mask = gradientMask
-        let colors = [ColorManager.shared.klineMinuteDropdownGradientColor1.cgColor,
-                      ColorManager.shared.klineMinuteDropdownGradientColor2.cgColor,
-                      ColorManager.shared.klineMinuteDropdownGradientColor34.cgColor,
-                      ColorManager.shared.klineMinuteDropdownGradientColor34.cgColor]
+//        let colors = [ColorManager.shared.klineMinuteDropdownGradientColor1.cgColor,
+//                      ColorManager.shared.klineMinuteDropdownGradientColor2.cgColor,
+//                      ColorManager.shared.klineMinuteDropdownGradientColor34.cgColor,
+//                      ColorManager.shared.klineMinuteDropdownGradientColor34.cgColor]
+        let colors = [UIColor(hex: "EE9922").withAlphaComponent(0.30).cgColor,
+                      UIColor(hex: "EE9922").withAlphaComponent(0.00).cgColor]
         gradientLayer.colors = colors
         
         yesterdayShapeLayer.fillColor = UIColor.clear.cgColor
@@ -41,6 +43,17 @@ class AreaLine: KLine {
         todayShapeLayer.shadowOffset = CGSize(width: 0.0, height: 6.0)
         todayShapeLayer.shadowRadius = 8.0
         addSublayer(todayShapeLayer)
+    }
+    
+    override func applyStyle() {
+        super.applyStyle()
+        
+        if let chartStyle = chartStyle {
+            let colors = chartStyle.areaChartGradientColors
+            gradientLayer.colors = colors
+            todayShapeLayer.strokeColor = chartStyle.klineMinuteLineColor.cgColor
+            todayShapeLayer.lineWidth = chartStyle.klineMinuteLineWidth
+        }
     }
     
     override func layoutSublayers() {

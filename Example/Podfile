@@ -4,7 +4,7 @@ use_frameworks!
 target 'Kline_Example' do
   pod 'Kline', :path => '../'
   
-  pod 'SnapKit'
+  pod 'SnapKit', '5.0.1'
   pod 'Starscream'
   pod 'ObjectMapper'
 #  pod 'Reveal-SDK'

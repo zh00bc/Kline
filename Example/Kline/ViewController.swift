@@ -32,6 +32,10 @@ class ViewController: UIViewController {
         
         let chartStyle = ChartStyle()
         chartStyle.mainChartGradientColors = [UIColor.clear.cgColor, UIColor.clear.cgColor]
+        chartStyle.areaChartGradientColors = [UIColor.red.withAlphaComponent(0.20).cgColor, UIColor.red.withAlphaComponent(0.10).cgColor]
+        chartStyle.klineMinuteLineColor = .red
+        chartStyle.klineMinuteLineWidth = 2.0
+        chartStyle.showTime = false
         slitherView = SlitherView(frame: CGRect(x: 0, y: 300, width: UIScreen.main.bounds.width, height: 520), style: chartStyle)
         slitherView.delegate = self
         view.addSubview(slitherView)
@@ -91,6 +95,8 @@ class ViewController: UIViewController {
             default:
                 break
             }
+            
+            self.dataSource.volumeChartType = .assistant_hide
             
             self.activity.startAnimating()
             self.slitherView.resetData()

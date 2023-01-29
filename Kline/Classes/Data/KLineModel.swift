@@ -218,6 +218,7 @@ class CandleLinePriceData: KLineModel {
     var lowPrice: NSNumber = 0.0
     var highPrice: NSNumber = 0.0
     var priceUp: Bool = false
+    var isLast: Bool = false
 }
 
 class ColumnarPriceData: KLineModel {

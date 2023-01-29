@@ -88,10 +88,10 @@ open class MarketDataManager {
     }
     
     public func append(klines: [KLineDataModel], period: PeriodType, bSub: Bool, deleteHistory: Bool) {
-        for kline in klines {
-            kline.change = kline.close.subtracting(kline.open)
-            kline.changeRate = kline.change.dividing(by: kline.open.multiplying(by: 100))
-        }
+//        for kline in klines {
+//            kline.change = kline.close.subtracting(kline.open)
+//            kline.changeRate = kline.change.dividing(by: kline.open.multiplying(by: 100))
+//        }
         
         var originData = periodData(period: period)
         if originData.count == 0 || deleteHistory {
@@ -153,8 +153,8 @@ open class MarketDataManager {
             from.high = realData.high
             from.low = realData.low
             from.amount = realData.amount
-            from.change = realData.change
-            from.changeRate = realData.changeRate
+//            from.change = realData.change
+//            from.changeRate = realData.changeRate
         } else {
             from.open = from.open.adding(to.changeOpen)
             from.close = from.close.adding(to.changeClose)
@@ -162,11 +162,11 @@ open class MarketDataManager {
             from.low = from.low.adding(to.changeLow)
             from.amount = from.amount.adding(to.changeAmount)
             from.change = from.close.subtracting(from.open)
-            if from.change != 0 {
-                from.changeRate = from.change.dividing(by: from.open).multiplying(by: 100)
-            } else {
-                from.changeRate = 0.0
-            }
+//            if from.change != 0 {
+//                from.changeRate = from.change.dividing(by: from.open).multiplying(by: 100)
+//            } else {
+//                from.changeRate = 0.0
+//            }
         }
         
         to.lastNum = to.lastNum - 1

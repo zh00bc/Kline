@@ -11,6 +11,8 @@ import UIKit
 struct ColorManager {
     static let shared = ColorManager()
     
+    let main = UIColor(hex: "#EE9922")
+    
     let slitherNumberLineColor = UIColor(hex: "#7788AA").withAlphaComponent(0.1)
     
     let klineMainBackgroundGradientColor1 = UIColor(hex: "#10142E").cgColor
@@ -37,8 +39,8 @@ struct ColorManager {
     let klineMinuteDropdownGradientColor2 = UIColor(hex: "#31F9B4", alpha: 0.05)
     let klineMinuteDropdownGradientColor34 = UIColor(hex: "#31F9B4", alpha: 0.01)
     
-    let klineMinuteLineColor = UIColor(hex: "#44AA99")
-    let klinePreDayMinuteColor = UIColor(red: 0.427451, green: 0.529412, blue: 0.658824, alpha: 1)
+    let klineMinuteLineColor = UIColor(hex: "#EE9922")
+    let klinePreDayMinuteColor = UIColor(hex: "#EE9922")
     let klineMinuteShadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
     let klineMA1Color = UIColor(hex: "#F0BA69")
     let klineMA2Color = UIColor(hex: "#58D188")
@@ -47,10 +49,10 @@ struct ColorManager {
     let klineMA5Color = UIColor(red: 0.443137, green: 0.823529, blue: 0.027451, alpha: 1)
     let klineMA6Color = UIColor(hex: "#9BA1C7")
     
-    let klineCrossCursorGradientColor1 = UIColor(hex: "#778899").withAlphaComponent(0.0)
-    let klineCrossCursorGradientColor24 = UIColor(hex: "#778899").withAlphaComponent(0.08)
-    let klineCrossCursorGradientColor3 = UIColor(hex: "#778899").withAlphaComponent(0.08)
-    let klineCrossCursorGradientColor5 = UIColor(hex: "#778899").withAlphaComponent(0.08)
+    let klineCrossCursorGradientColor1 = UIColor(hex: "#778E99").withAlphaComponent(0.0)
+    let klineCrossCursorGradientColor24 = UIColor(hex: "#778E99").withAlphaComponent(0.30)
+    let klineCrossCursorGradientColor3 = UIColor(hex: "#778E99").withAlphaComponent(0.30)
+    let klineCrossCursorGradientColor5 = UIColor(hex: "#778E99").withAlphaComponent(0.08)
     
     let klineCrossCursorPriceBackgroundColor = UIColor(red: 0.0313726, green: 0.0901961, blue: 0.141176, alpha: 0.8)
     let klineCrossCursorPriceTextColor = UIColor(red: 0.811765, green: 0.827451, blue: 0.913725, alpha: 1)
@@ -61,7 +63,7 @@ struct ColorManager {
     let klineBgColor = UIColor(red: 0.0627451, green: 0.121569, blue: 0.192157, alpha: 1)
     let klineMinuteVolumeColor = UIColor(hex: "#44AA99", alpha: 0.6)
     
-    let klinePrimaryTextColor = UIColor(hex: "#225566")
+    let klinePrimaryTextColor = UIColor(hex: "#224455")
     
     let kColorSecondaryText = UIColor(red: 0.427451, green: 0.529412, blue: 0.658824, alpha: 1)
     let kColorContentBackground = UIColor(red: 0.0745098, green: 0.121569, blue: 0.188235, alpha: 1)

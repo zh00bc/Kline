@@ -67,7 +67,7 @@ open class SlitherView: UIView {
 
     /// x - x Offset
     var lineInterval: CGFloat = 9
-    var maxLineWidth: CGFloat = 7
+    var maxLineWidth: CGFloat = 9
     
     var lastPinchScale: CGFloat = 1.0
     var longPressedPoint: CGPoint = CGPoint.zero
@@ -75,7 +75,7 @@ open class SlitherView: UIView {
     /// 记录上次显示起始位置的timestamp
     var startDate: Int?
     
-    var style: ChartStyle?
+    var style: ChartStyle!
     
     deinit {
         print("SlitherView deinit")
@@ -337,6 +337,12 @@ extension SlitherView {
         
         if let klineModel = dataSource.getData(from: lineData.nDataIndex) as? CandleLinePriceData {
             
+            if lineData.nDataIndex == dataSource.pointCount - 1 {
+                klineModel.isLast = true
+            } else {
+                klineModel.isLast = false
+            }
+            
             /// 计算选中点的价格
             let d = (mainChart.maxPrice.doubleValue - mainChart.minPrice.doubleValue) / Double(mainChart.bounds.height - Constants.mainChartTopSpace - Constants.mainChartBottomSpace)
             let p = mainChart.minPrice.doubleValue + Double((mainChart.frame.maxY - point.y)) * d
@@ -380,6 +386,11 @@ extension SlitherView {
         showTouch(lineData: lineData)
         
         if let klineModel = dataSource.getData(from: lineData.nDataIndex) as? CandleLinePriceData {
+            if lineData.nDataIndex == dataSource.pointCount - 1 {
+                klineModel.isLast = true
+            } else {
+                klineModel.isLast = false
+            }
             longPressShowView.longPressShow(point: CGPoint(x: lineData.x, y: lineData.y), period: period, timeCenterY: timeShowView.center.y, lineWidth: maxLineWidth, kLineModel: klineModel, pricePrecision: dataSource.pricePrecision, amountPrecision: dataSource.amountPrecision)
         }
         
@@ -439,9 +450,9 @@ extension SlitherView {
         scrollView.decelerationRate = .fast
         addSubview(scrollView)
         
-        mainChart = ChartView(type: .candle)
-        volumeChart = ChartView(type: .volume)
-        assistantChart = ChartView(type: .assistant)
+        mainChart = ChartView(type: .candle, chartStyle: style)
+        volumeChart = ChartView(type: .volume, chartStyle: style)
+        assistantChart = ChartView(type: .assistant, chartStyle: style)
         scrollView.addSubview(mainChart)
         scrollView.addSubview(volumeChart)
         scrollView.addSubview(assistantChart)
@@ -454,15 +465,16 @@ extension SlitherView {
         latestPriceView = KLineLatestPriceView()
         gotoLatestButton = UIButton(type: .custom)
         gotoLatestButton.setTitleColor(ColorManager.shared.klinePrimaryTextColor, for: .normal)
-        gotoLatestButton.titleLabel?.font = UIFont.systemFont(ofSize: 9)//CustomFonts.DIN.medium.font(ofSize: 9)
+        gotoLatestButton.titleLabel?.font = UIFont.systemFont(ofSize: 10)//CustomFonts.DIN.medium.font(ofSize: 9)
         gotoLatestButton.backgroundColor = UIColor.white //ColorManager.shared.klineIndexBackgroundGradientColorStart
-        gotoLatestButton.layer.borderColor = ColorManager.shared.klinePrimaryTextColor.cgColor
+        gotoLatestButton.layer.borderColor = ColorManager.shared.main.cgColor
         gotoLatestButton.layer.borderWidth = 1.0
         gotoLatestButton.layer.cornerRadius = 10.0
         gotoLatestButton.setImage(UIImage(named: "kline_price_icon"), for: .normal)
         gotoLatestButton.addTarget(self, action: #selector(goToLatest), for: .touchUpInside)
         gotoLatestButton.isHidden = true
         longPressShowView = LongPressShowView()
+        longPressShowView.chartStyle = style
         longPressShowView.isHidden = true
         addSubview(timeShowView)
         addSubview(latestPriceView)
@@ -500,7 +512,11 @@ extension SlitherView {
         volumeChart.isHidden = volumeViewChartType == .assistant_hide
         assistantNumberView.isHidden = assistantViewChartType == .assistant_hide
         assistantChart.isHidden = assistantViewChartType == .assistant_hide
-                
+        
+        timeShowView.isHidden = !style.showTime
+        
+        let timeShowViewHeight: CGFloat = style.showTime ? Constants.timeViewHeight : 0.0
+
         if isFullView {
             if assistantViewChartType == .assistant_hide {
                 
@@ -510,22 +526,22 @@ extension SlitherView {
                 } else {
                     assistantNumberView.frame = CGRect(x: 0.0, y: bounds.height - Constants.assistantViewHeight, width: bounds.width, height: Constants.assistantViewHeight)
                 }
-                timeShowView.frame = CGRect(x: 0.0, y: assistantNumberView.frame.maxY, width: viewWidth, height: Constants.timeViewHeight)
+                timeShowView.frame = CGRect(x: 0.0, y: assistantNumberView.frame.maxY, width: viewWidth, height: timeShowViewHeight)
             }
         } else {
-            timeShowView.frame = CGRect(x: 0.0, y: bounds.height - Constants.timeViewHeight, width: viewWidth, height: Constants.timeViewHeight)
+            timeShowView.frame = CGRect(x: 0.0, y: bounds.height - timeShowViewHeight, width: viewWidth, height: timeShowViewHeight)
             
             if assistantViewChartType == .assistant_hide && volumeViewChartType == .assistant_hide {
                 mainNumberView.frame = CGRect(x: 0.0, y: 0.0, width: viewWidth, height: timeShowView.frame.minY)
             } else {
                 if assistantViewChartType == .assistant_hide && volumeViewChartType != .assistant_hide {
-                    volumeNumberView.frame = CGRect(x: 0.0, y: bounds.height - Constants.timeViewHeight - Constants.assistantViewHeight, width: viewWidth, height: Constants.assistantViewHeight)
+                    volumeNumberView.frame = CGRect(x: 0.0, y: bounds.height - timeShowViewHeight - Constants.assistantViewHeight, width: viewWidth, height: Constants.assistantViewHeight)
                     mainNumberView.frame = CGRect(x: 0.0, y: 0.0, width: viewWidth, height: volumeNumberView.frame.minY)
                 } else if assistantViewChartType != .assistant_hide && volumeViewChartType == .assistant_hide {
-                    assistantNumberView.frame = CGRect(x: 0.0, y: bounds.height - Constants.timeViewHeight - Constants.assistantViewHeight, width: viewWidth, height: Constants.assistantViewHeight)
+                    assistantNumberView.frame = CGRect(x: 0.0, y: bounds.height - timeShowViewHeight - Constants.assistantViewHeight, width: viewWidth, height: Constants.assistantViewHeight)
                     mainNumberView.frame = CGRect(x: 0.0, y: 0.0, width: viewWidth, height: assistantNumberView.frame.minY)
                 } else {
-                    assistantNumberView.frame = CGRect(x: 0.0, y: bounds.height - Constants.timeViewHeight - Constants.assistantViewHeight, width: viewWidth, height: Constants.assistantViewHeight)
+                    assistantNumberView.frame = CGRect(x: 0.0, y: bounds.height - timeShowViewHeight - Constants.assistantViewHeight, width: viewWidth, height: Constants.assistantViewHeight)
                     volumeNumberView.frame = CGRect(x: 0.0, y: assistantNumberView.frame.minY - Constants.assistantViewHeight, width: viewWidth, height: Constants.assistantViewHeight)
                     mainNumberView.frame = CGRect(x: 0.0, y: 0.0, width: viewWidth, height: volumeNumberView.frame.minY)
                 }

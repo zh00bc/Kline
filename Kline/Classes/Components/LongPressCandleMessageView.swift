@@ -8,8 +8,21 @@
 
 import UIKit
 
+class DynamicHeightTableView: UITableView {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if !__CGSizeEqualToSize(bounds.size, self.intrinsicContentSize) {
+            self.invalidateIntrinsicContentSize()
+        }
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return contentSize
+    }
+}
+
 class LongPressCandleMessageView: UIView {
-    let tableView = UITableView(frame: CGRect.zero, style: .plain)
+    let tableView = DynamicHeightTableView(frame: CGRect.zero, style: .plain)
     var amountPrecision: Int = 2
     var pricePrecision: Int = 8
     var period: PeriodType = .min15
@@ -20,15 +33,18 @@ class LongPressCandleMessageView: UIView {
         didSet {
             if let d = priceData {
                 let textColor = ColorManager.shared.klinePrimaryTextColor
-                let time = (NSLocalizedString("kline.date", comment: ""), "\(KlineDateCommon.string(timestamp: d.time, period: period))", textColor)
-                let open = (NSLocalizedString("kline.open", comment: ""), "\(KLineNumberFormatter.format(d.openPrice, precision: pricePrecision))", textColor)
-                let high = (NSLocalizedString("kline.high", comment: ""), "\(KLineNumberFormatter.format(d.highPrice, precision: pricePrecision))", textColor)
-                let low = (NSLocalizedString("kline.low", comment: ""), "\(KLineNumberFormatter.format(d.lowPrice, precision: pricePrecision))", textColor)
-                let close = (NSLocalizedString("kline.close", comment: ""), "\(KLineNumberFormatter.format(d.closePrice, precision: pricePrecision))", textColor)
-                let change = (NSLocalizedString("kline.change", comment: ""), "\(KLineNumberFormatter.format(d.change, precision: pricePrecision, numberStyle: .decimal, positivePrefix: true))", d.priceUp ? ColorManager.shared.kColorShadeButtonGreenEnd : ColorManager.shared.kColorShadeButtonRedEnd)
-                let changeRate = (NSLocalizedString("kline.change%", comment: ""), "\(KLineNumberFormatter.format(d.changeRate, precision: 2, positivePrefix: true))%", d.priceUp ? ColorManager.shared.kColorShadeButtonGreenEnd : ColorManager.shared.kColorShadeButtonRedEnd)
-                let executed = (NSLocalizedString("kline.volume", comment: ""), "\(KLineNumberFormatter.format(d.volume, precision: amountPrecision))", textColor)
-                dataSource = [time, open, high, low, close, change, changeRate, executed]
+                
+                let time = (LanguageManager.shared.localize(string: "kline.date"), "\(KlineDateCommon.string(timestamp: d.time, period: .day))", textColor)
+                let open = (LanguageManager.shared.localize(string: "kline.open"), "\(KLineNumberFormatter.format(d.openPrice, precision: pricePrecision))", textColor)
+                let changeRate = (LanguageManager.shared.localize(string: "kline.change%"), "\(KLineNumberFormatter.format(d.changeRate, precision: 2, positivePrefix: true))%", d.changeRate.doubleValue >= 0 ? ColorManager.shared.kColorShadeButtonGreenEnd : ColorManager.shared.kColorShadeButtonRedEnd)
+                
+                if d.isLast {
+                    let close = (LanguageManager.shared.localize(string: "kline.current"), "\(KLineNumberFormatter.format(d.volume, precision: pricePrecision))", textColor)
+                    dataSource = [time, open, close, changeRate]
+                } else {
+                    let close = (LanguageManager.shared.localize(string: "kline.close"), "\(KLineNumberFormatter.format(d.volume, precision: pricePrecision))", textColor)
+                    dataSource = [time, open, close, changeRate]
+                }
             } else {
                 dataSource = []
             }
@@ -50,25 +66,35 @@ class LongPressCandleMessageView: UIView {
         layer.cornerRadius = 5
         layer.borderWidth = 1.0
         layer.masksToBounds = true
-        layer.borderColor = ColorManager.shared.kColorSecondaryText.cgColor
-        backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.95)//ColorManager.shared.klineIndexBackgroundGradientColorStart
+        layer.borderColor = ColorManager.shared.main.cgColor
+        backgroundColor = .white
         
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.isUserInteractionEnabled = false
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-        tableView.rowHeight = 17.0
+        tableView.rowHeight = 20.0
         tableView.register(LongPressCandleMessageCell.self, forCellReuseIdentifier: "LongPressCandleMessageCell")
         tableView.dataSource = self
         addSubview(tableView)
         self.snp.makeConstraints {
             $0.width.equalTo(130)
-            $0.height.equalTo(140)
+            $0.height.equalTo(74)
         }
         tableView.snp.makeConstraints {
             $0.left.right.equalToSuperview()
-            $0.top.bottom.equalToSuperview().inset(2)
+            $0.centerY.equalToSuperview()
         }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.shadowColor = UIColor(red: 0.933, green: 0.6, blue: 0.133, alpha: 0.12).cgColor
+        layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        layer.shadowRadius = 9.0
+        layer.shadowOpacity = 1
+        layer.masksToBounds = false
+        layer.cornerRadius = 6
     }
 }
 

@@ -30,6 +30,7 @@ class KLine: CAShapeLayer {
     var kLineWidth: CGFloat = 7.0
     var index: Int = 0
     
+    var chartStyle: ChartStyle?
     
     init(type: LineType) {
         self.lineType = type
@@ -43,6 +44,11 @@ class KLine: CAShapeLayer {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSublayers() {
+        super.layoutSublayers()
+        applyStyle()
+    }
+    
     open override func action(forKey event: String) -> CAAction? {
         return nil
     }
@@ -54,6 +60,12 @@ class KLine: CAShapeLayer {
     func setup() {
         
     }
+    
+    func applyStyle() {
+        
+    }
+    
+    
     
     func drawCubicLine(inContext context: CGContext, curX: Double, curY: Double, prevX: Double, prevY: Double, prevPrevX: Double, prevPrevY: Double, nextX: Double, nextY: Double) {
         let intensity = 0.10

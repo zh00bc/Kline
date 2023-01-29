@@ -18,7 +18,7 @@ DEPENDENCIES:
   - ObjectMapper
   - RxCocoa
   - RxSwift
-  - SnapKit
+  - SnapKit (= 5.0.1)
   - Starscream
 
 SPEC REPOS:
@@ -45,6 +45,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
 
-PODFILE CHECKSUM: b468dcc63f93dc3105b3d8299d061e9ffd4476ec
+PODFILE CHECKSUM: f6cb67e4413b52e18a2d09cde9587fe4dd1b8b51
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

@@ -28,12 +28,15 @@ class ChartView: UIView {
     var maxPrice: NSNumber = 0
     var minPrice: NSNumber = 0
     
+    let chartStyle: ChartStyle
+    
     deinit {
         print("ChartView deinit")
     }
     
-    init(type: ChartViewType) {
+    init(type: ChartViewType, chartStyle: ChartStyle) {
         self.type = type
+        self.chartStyle = chartStyle
         super.init(frame: CGRect.zero)
 //        setup()
     }
@@ -89,6 +92,7 @@ extension ChartView {
         kLines.removeAll()
         for index in stride(from: 0, to: dataSource.numberOfLines(in: self), by: 1) {
             let kLine = dataSource.kLine(for: self, atIndex: index)
+            kLine.chartStyle = chartStyle
             kLines.append(kLine)
             kLine.frame = bounds
             layer.addSublayer(kLine)

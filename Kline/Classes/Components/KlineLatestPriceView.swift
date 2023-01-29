@@ -13,9 +13,9 @@ class KLineLatestPriceView: UIView {
     lazy var textLayer: CATextLayer = {
         var layer = CATextLayer()
         layer.contentsScale = UIScreen.main.scale
-        layer.fontSize = 9.0
-        layer.font = UIFont.systemFont(ofSize: 9)//CustomFonts.DIN.medium.font(ofSize: 9)
-        layer.foregroundColor = UIColor(hex: "#564CE0").cgColor
+        layer.fontSize = 10.0
+        layer.font = UIFont.systemFont(ofSize: 10, weight: .semibold)//CustomFonts.DIN.medium.font(ofSize: 9)
+        layer.foregroundColor = ColorManager.shared.main.cgColor
         layer.backgroundColor = UIColor.white.cgColor//ColorManager.shared.kColorContentBackground.withAlphaComponent(0.9).cgColor
         return layer
     }()
@@ -24,7 +24,7 @@ class KLineLatestPriceView: UIView {
         var imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = dashLine(color: UIColor(hex: "#564CE0"))
+        imageView.image = dashLine(color: UIColor(hex: "#EE9922"))
         return imageView
     }()
     
@@ -32,19 +32,21 @@ class KLineLatestPriceView: UIView {
         var imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = dashLine(color: UIColor(hex: "#564CE0"))
+        imageView.image = dashLine(color: UIColor(hex: "#EE9922"))
         return imageView
     }()
     
     lazy var animationView: CALayer = {
         let baseLayer = CALayer()
         baseLayer.backgroundColor = UIColor.white.cgColor
+        baseLayer.borderColor = UIColor(hex: "#EE9922").cgColor
+        baseLayer.borderWidth = 1.0
         baseLayer.cornerRadius = 2
         let duration = 1.5
         
         let animationLayer = CALayer()
         animationLayer.frame = CGRect(x: 0.0, y: 0.0, width: 4, height: 4)
-        animationLayer.backgroundColor = UIColor.white.cgColor
+        animationLayer.backgroundColor = UIColor(hex: "#EE9922").cgColor
         animationLayer.cornerRadius = 2.0
         
         let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
@@ -77,7 +79,7 @@ class KLineLatestPriceView: UIView {
     }()
     
     // 文字属性
-    var textAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 9),
+    var textAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 10, weight: .semibold),
                                                          .backgroundColor: ColorManager.shared.kColorContentBackground.withAlphaComponent(0.9),
                                                          .foregroundColor: ColorManager.shared.klineIndexSettingTextColor] {
         didSet {
@@ -86,7 +88,7 @@ class KLineLatestPriceView: UIView {
                 textLayer.fontSize = font.pointSize
             }
             if let foregroundColor = textAttributes[.foregroundColor] as? UIColor {
-                textLayer.foregroundColor = UIColor(hex: "#564CE0").cgColor
+                textLayer.foregroundColor = UIColor(hex: "#EE9922").cgColor
             }
             if let backgroundColor = textAttributes[.backgroundColor] as? UIColor {
                 textLayer.backgroundColor = UIColor.white.cgColor//backgroundColor.cgColor

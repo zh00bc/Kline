@@ -29,15 +29,20 @@ open class KlineViewDataSource {
     
     public var mainChartType: ChartType = .main_ma
     public var assistantChartType: ChartType = .assistant_hide
-    public var volumeChartType: ChartType = .volume
+    public var volumeChartType: ChartType = .assistant_hide
     
     private var queryMoreDate: Int = 0
     private var historyCurrentDate: Int = 0
     
+    let lock = NSLock()
+    
     public init() { }
     
     func periodData(period: PeriodType) -> [KLineDataModel] {
-        return originDataPoolDic[period] ?? []
+        lock.lock()
+        let data = originDataPoolDic[period] ?? []
+        lock.unlock()
+        return data
     }
 }
 
@@ -83,6 +88,7 @@ extension KlineViewDataSource {
                 kLine = ColumnarLine(type: .minuteColumnar)
             } else {
                 kLine = ColumnarLine(type: .columnar)
+                
             }
         default:
             kLine = SolidLine(type: .solid)
@@ -418,13 +424,15 @@ extension KlineViewDataSource {
             return
         }
         
-        for kline in klines {
-            kline.change = kline.close.subtracting(kline.open)
-            kline.changeRate = kline.change.dividing(by: kline.open).multiplying(by: 100)
-        }
+//        for kline in klines {
+//            kline.change = kline.close.subtracting(kline.open)
+//            kline.changeRate = kline.change.dividing(by: kline.open).multiplying(by: 100)
+//        }
         
         if originData.isEmpty || deleteHistory {
+            lock.lock()
             originDataPoolDic[period] = klines
+            lock.unlock()
             changeDic.removeAll()
         } else {
             if bSub {
@@ -437,10 +445,13 @@ extension KlineViewDataSource {
                         }
                     }
                 }
-                
+                lock.lock()
                 originDataPoolDic[period] = originData
+                lock.unlock()
             } else {
+                lock.lock()
                 originDataPoolDic[period] = klines
+                lock.unlock()
             }
         }
         
@@ -478,20 +489,20 @@ extension KlineViewDataSource {
             from.high = realData.high
             from.low = realData.low
             from.amount = realData.amount
-            from.change = realData.change
-            from.changeRate = realData.changeRate
+//            from.change = realData.change
+//            from.changeRate = realData.changeRate
         } else {
             from.open = from.open.adding(to.changeOpen)
             from.close = from.close.adding(to.changeClose)
             from.high = from.high.adding(to.changeHigh)
             from.low = from.low.adding(to.changeLow)
             from.amount = from.amount.adding(to.changeAmount)
-            from.change = from.close.subtracting(from.open)
-            if from.change != 0 {
-                from.changeRate = from.change.dividing(by: from.open).multiplying(by: 100)
-            } else {
-                from.changeRate = 0.0
-            }
+//            from.change = from.close.subtracting(from.open)
+//            if from.change != 0 {
+//                from.changeRate = from.change.dividing(by: from.open).multiplying(by: 100)
+//            } else {
+//                from.changeRate = 0.0
+//            }
         }
         
         to.lastNum = to.lastNum - 1

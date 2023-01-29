@@ -32,11 +32,11 @@ class LongPressCandleMessageCell: UITableViewCell {
         contentView.addSubview(valueLabel)
         nameLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.left.equalToSuperview().offset(5)
+            $0.left.equalToSuperview().offset(8)
         }
         valueLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.right.equalToSuperview().offset(-5)
+            $0.right.equalToSuperview().offset(-8)
         }
     }
 }

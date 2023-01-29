@@ -32,6 +32,9 @@ struct KLineNumberFormatter {
         formatter.minimumFractionDigits = precision
         formatter.maximumFractionDigits = precision
         formatter.roundingMode = roundingMode
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.currencyDecimalSeparator = "."
+        formatter.currencyGroupingSeparator = ","
         if positivePrefix {
             formatter.positivePrefix = "+"
         } else {

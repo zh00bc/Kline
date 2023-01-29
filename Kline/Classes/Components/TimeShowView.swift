@@ -49,7 +49,7 @@ class TimeShowView: UIView {
             timeLabel.snp.makeConstraints {
                 $0.top.bottom.equalTo(self)
                 if index == 0 {
-                    $0.centerX.equalTo(self.snp.left)
+                    $0.left.equalTo(self.snp.left).offset(2)
                 } else if index == 6 {
                     $0.centerX.equalTo(self.snp.right)
                 } else {

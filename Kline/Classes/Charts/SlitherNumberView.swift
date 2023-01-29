@@ -41,7 +41,7 @@ class SlitherNumberView: UIView {
     /// 横线条数
     let yLineNumber: Int
     
-    let lineHeight: CGFloat = 0.5
+    let lineHeight: CGFloat = 1.0 / UIScreen.main.scale
 
     var xSpacing: CGFloat {
         return bounds.width / CGFloat( xLineNumber + 1 )
@@ -64,7 +64,7 @@ class SlitherNumberView: UIView {
         
         switch type {
         case .main:
-            yLineNumber = 5
+            yLineNumber = style?.mainYLineNumber ?? 5
         case .volume:
             yLineNumber = 2
         case .assistant:
@@ -87,7 +87,7 @@ class SlitherNumberView: UIView {
         addSubview(messageView)
         for _ in stride(from: 0, to: 5, by: 1) {
             let textLabel = BaseLabel()
-            textLabel.font = UIFont.systemFont(ofSize: 9)
+            textLabel.font = UIFont.systemFont(ofSize: 10)
 //            textLabel.font = CustomFonts.DIN.medium.font(ofSize: 10)
             textLabel.textColor = ColorManager.shared.klineCnyRateColor
             addSubview(textLabel)

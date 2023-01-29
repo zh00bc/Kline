@@ -15,7 +15,8 @@ struct KlineDateCommon {
         let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
         switch period {
         case .timeline:
-            formatter.dateFormat = "HH:mm"
+//            formatter.dateFormat = "HH:mm"
+            formatter.dateFormat = "MM-dd"
         case .min:
             formatter.dateFormat = "HH:mm"
         case .day, .week:

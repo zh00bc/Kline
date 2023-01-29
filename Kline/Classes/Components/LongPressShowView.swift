@@ -29,6 +29,7 @@ class LongPressShowView: UIView {
 
     var pressedType: PressedType = .short
     
+    var chartStyle: ChartStyle?
 
     lazy var messageView: LongPressCandleMessageView = {
         let messageView = LongPressCandleMessageView()
@@ -61,9 +62,27 @@ class LongPressShowView: UIView {
     
     lazy var roundPriceView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 2.0
+        view.layer.cornerRadius = 5.0
         view.layer.masksToBounds = true
-        view.backgroundColor = .white
+        view.backgroundColor = .white.withAlphaComponent(0.60)
+        
+        let whiteView = UIView()
+        whiteView.backgroundColor = .white
+        whiteView.layer.cornerRadius = 3.0
+        view.addSubview(whiteView)
+        whiteView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.width.height.equalTo(6)
+        }
+        
+        let redView = UIView()
+        redView.backgroundColor = ColorManager.shared.main
+        redView.layer.cornerRadius = 2
+        view.addSubview(redView)
+        redView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.width.height.equalTo(4)
+        }
         return view
     }()
     
@@ -78,6 +97,7 @@ class LongPressShowView: UIView {
         label.layer.masksToBounds = true
         
         label.backgroundColor = ColorManager.shared.klineIndexBackgroundGradientColorStart
+        label.isHidden = true
         return label
     }()
     
@@ -135,8 +155,12 @@ class LongPressShowView: UIView {
         messageView.period = period
         
         vLine.snp.remakeConstraints {
-            $0.width.equalTo(lineWidth)
-            $0.bottom.equalTo(self)
+            $0.width.equalTo(8)
+            if let chartStyle = chartStyle, chartStyle.showTime {
+                $0.bottom.equalTo(self).offset(-Constants.timeViewHeight)
+            } else {
+                $0.bottom.equalTo(self)
+            }
             $0.top.equalTo(self).offset(Constants.mainChartTopOffset)
             $0.centerX.equalTo(self.snp.left).offset(point.x)
         }
@@ -144,9 +168,13 @@ class LongPressShowView: UIView {
         roundPriceView.snp.remakeConstraints {
             $0.centerX.equalTo(vLine)
             $0.centerY.equalTo(self.snp.top).offset(point.y + Constants.mainChartTopOffset)
-            $0.height.width.equalTo(4)
+            $0.height.width.equalTo(10)
         }
         
+        var candleMessageViewHeight: CGFloat = 94
+//        if kLineModel.isLast {
+//            candleMessageViewHeight = 94
+//        }
         
         if point.x <= bounds.width * 0.5 {
             tipLabel.bInLeft = true
@@ -166,7 +194,7 @@ class LongPressShowView: UIView {
                 $0.right.equalToSuperview().offset(-5)
                 $0.top.equalToSuperview().offset(27)
                 $0.width.equalTo(Constants.candleMessageViewWidth)
-                $0.height.equalTo(Constants.candleMessageViewHeight)
+                $0.height.equalTo(candleMessageViewHeight)
             }
         } else {
             tipLabel.bInLeft = false
@@ -186,7 +214,7 @@ class LongPressShowView: UIView {
                 $0.left.equalToSuperview().offset(5)
                 $0.top.equalToSuperview().offset(30)
                 $0.width.equalTo(Constants.candleMessageViewWidth)
-                $0.height.equalTo(Constants.candleMessageViewHeight)
+                $0.height.equalTo(candleMessageViewHeight)
             }
         }
         
