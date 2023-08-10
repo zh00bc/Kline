@@ -20,6 +20,9 @@ it, simply add the following line to your Podfile:
 pod 'Kline'
 ```
 
+## Screenshot
+![image](Screenshot_01.png)
+
 ## Author
 
 zhangj, seasonsv@gmail.com
